@@ -7,13 +7,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>REKAPITULASI ABSENSI - {{ $pembelajaran->kelas->name }} | {{ $pembelajaran->mapel->name }}</title>
 
-    {{-- <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"> --}}
+    {{-- <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet"> --}}
     <link rel="stylesheet" href="adminlte/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="my-css/style.css">
 
     <style>
         .fs-12 {
             font-size: 12px;
+        }
+        .fs-11 {
+            font-size: 11px;
         }
 
         .fs-14 {
@@ -30,15 +33,15 @@
 <body style="font-family: Figtree">
 
 
-    <div class="">
+    <div class="fs-11">
 
-        <div class=" mt-3">
+        <div class="mt-0">
 
-            <img src="img/{{ $sekolah->logo ?? 'logo.png' }}" alt="" style="width: 100px"
+            <img src="img/{{ $sekolah->logo ?? 'logo.png' }}" alt="" style="width: 80px"
                 class="text-start position-absolute rounded-circle" />
             <div class="text-center">
-                <h3 class="fw-bold mb-1">REKAPITULASI ABSENSI</h3>
-                <h3 class="fw-bold">{{ $sekolah->name ?? '' }}</h3>
+                <h5 class="fw-bold mb-1">REKAPITULASI ABSENSI</h5>
+                <h5 class="fw-bold">{{ $sekolah->name ?? '' }}</h5>
                 <p>{{ $sekolah->alamat ?? '' }}</p>
                 <hr />
             </div>

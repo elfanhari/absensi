@@ -110,7 +110,7 @@ class RekapAbsensiController extends Controller
         'pertemuan' => Pertemuan::where('pembelajaran_id', $id)->orderBy('pertemuan_ke', 'ASC')->get(),
         'absen' => Absen::get(),
         'role' => auth()->user()->role,
-      ])->setPaper('Folio', 'Landscape');
+      ])->setPaper('F4', 'Potrait');
       return $pdf->stream('REKAP ABSENSI.pdf');
     }
 }
