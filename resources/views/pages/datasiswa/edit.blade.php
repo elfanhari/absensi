@@ -10,17 +10,6 @@
         <div class="container-fluid">
 
             <div class="row">
-              <div class="col-md-6">
-                @if (session()->has('info'))
-                  <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    @include('_success')
-                    {{ session('info') }}
-                  </div>
-                @endif
-              </div>
-            </div>
-
-            <div class="row mb-2">
                 <div class="col-sm-6">
                   <h4 class="fw-bold poppins m-0">
                     <button class="btn btn-sm btn-link p-0 me-1" onclick="history.back()">

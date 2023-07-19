@@ -74,8 +74,8 @@ class AbsensiController extends Controller
       ]);
 
     } else {
-      Pertemuan::create($request->all());
-      return back()
+      $pert = Pertemuan::create($request->all());
+      return redirect(route('kelolaabsensi.edit', ['role' => auth()->user()->role, 'id' => $pert->id]))
         ->withSuccess('Pertemuan ke-' . $reqPertemuanKe . ' berhasil ditambahkan!');
     }
   }
@@ -89,19 +89,31 @@ class AbsensiController extends Controller
   public function show($role, $id)
   {
     $pembelajaran = Pembelajaran::find($id);
+    $user = auth()->user();
 
-    if (auth()->user()->role == 'siswa') {
-      $siswa = Siswa::where('user_id', auth()->user()->id)->get();
+    if ($role == 'siswa' && $user->siswa->kelas_id != $pembelajaran->kelas_id) {
+      abort('403');
+    } elseif ($role == 'guru' && $user->guru->id != $pembelajaran->guru_id) {
+      abort('403');
     } else {
-      $siswa = Siswa::where('kelas_id', $pembelajaran->kelas_id)->get();
+      if ($role == 'siswa') {
+        $siswa = Siswa::where('user_id', auth()->user()->id)
+                      ->whereHas('user', function($q){
+                        $q->where('is_aktif', true);
+                      })->get();
+      } else {
+        $siswa = Siswa::getSiswaAktifKelas($pembelajaran->kelas_id);
+      }
+      return view('pages.absensi.show', [
+        'pembelajaran' => $pembelajaran,
+        'siswa' => $siswa,
+        'pertemuan' => Pertemuan::where('pembelajaran_id', $id)->orderBy('pertemuan_ke', 'ASC')->get(),
+        'absen' => Absen::get(),
+        'role' => auth()->user()->role,
+      ]);
     }
-    return view('pages.absensi.show', [
-      'pembelajaran' => $pembelajaran,
-      'siswa' => $siswa,
-      'pertemuan' => Pertemuan::where('pembelajaran_id', $id)->orderBy('pertemuan_ke', 'ASC')->get(),
-      'absen' => Absen::get(),
-      'role' => auth()->user()->role,
-    ]);
+
+
   }
 
   /**
@@ -169,14 +181,25 @@ class AbsensiController extends Controller
   public function editAbsensi($role, $id) {
 
     $pertemuan = Pertemuan::find($id);
+    $user = auth()->user();
 
-    return view('pages.absensi.edit', [
-      'pembelajaran' => $pertemuan->pembelajaran,
-      'siswa' => Siswa::where('kelas_id', $pertemuan->pembelajaran->kelas_id)->get(),
-      'pertemuan' => $pertemuan,
-      'absen' => Absen::where('pertemuan_id', $id)->get(),
-      'role' => auth()->user()->role,
-    ]);
+    if ($role == 'siswa') {
+      abort('403');
+    } elseif ($role == 'guru' && $user->guru->id != $pertemuan->pembelajaran->guru_id) {
+      abort('403');
+    } else {
+      return view('pages.absensi.edit', [
+        'pembelajaran' => $pertemuan->pembelajaran,
+        'siswa' => Siswa::where('kelas_id', $pertemuan->pembelajaran->kelas_id)
+                  ->whereHas('user', function($q){
+                    $q->where('is_aktif', true);
+                  })->get(),
+        'pertemuan' => $pertemuan,
+        'absen' => Absen::where('pertemuan_id', $id)->get(),
+        'role' => auth()->user()->role,
+      ]);
+    }
+
   }
 
   public function updateAbsensi(Request $request, $role, $id) {
@@ -202,6 +225,7 @@ class AbsensiController extends Controller
         }
       }
     }
-    return back()->withSuccess('Data berhasil diperbarui!');
+    return redirect(route('absensi.show', ['role' => auth()->user()->role, 'absensi' => $pertemuan->pembelajaran_id]))
+    ->withSuccess('Data berhasil diperbarui!');
   }
 }

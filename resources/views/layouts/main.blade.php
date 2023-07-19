@@ -3,6 +3,7 @@
     use App\Models\User;
     use Carbon\Carbon;
     use Carbon\CarbonInterface;
+    use App\Models\Notifikasi;
 
     $admin = Auth::user()->admin;
     $guru = Auth::user()->guru;
@@ -17,6 +18,10 @@
         $userLogin = $siswa;
     }
 
+    $allMyNotif = Notifikasi::semuaNotifSaya(Auth::user()->id);
+    $notifBelumDibaca = Notifikasi::belumDibaca(Auth::user()->id);
+    $notifTelahDibaca = Notifikasi::telahDibaca(Auth::user()->id);
+
 @endphp
 
 <!DOCTYPE html>
@@ -26,7 +31,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-        Absensi MA Sumber Payung
+        Absensi MTs Rekayasa
     </title>
 
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -133,18 +138,19 @@
     <script src="/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/my-js/popper.js"></script>
     <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script>
-      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="modal"]'))
-      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-      })
-    </script>
+
     <script>
       var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
       var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
       })
     </script>
+      <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="modal"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+      </script>
     <script>
       $(function () {
           $('[data-toggle="tooltip"]').tooltip();

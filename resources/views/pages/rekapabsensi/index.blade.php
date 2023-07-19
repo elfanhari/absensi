@@ -48,15 +48,15 @@
                                             @foreach ($pembelajaran as $item)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $item->mapel->name }}</td>
+                                                    <td>{{ $item->mapel->singkatan }}</td>
                                                     <td>{{ $item->kelas->name }}</td>
                                                     <td>{{ $item->guru->name }}
                                                     <td>{{ $item->kelas->tapel->tahun_pelajaran . ' - Semester ' . $item->kelas->tapel->semester  }}
                                                     </td>
                                                     <td>
 
-                                                        {{-- @can('gurumapel') --}}
-                                                        <form action="{{ route('rekapabsensi.print', ['role' => auth()->user()->role, 'id' => $item->id]) }}" method="get" target="_blank">
+                                                        @if($item->pertemuan->count() >= 1)
+                                                        <form action="{{ route('rekapabsensi.print', ['role' => auth()->user()->role, 'id' => $item->id ]) }}" method="get" target="_blank">
                                                           {{-- @csrf --}}
                                                             <button type="submit" class="btn btn-primary btn-sm">
                                                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill me-1" viewBox="0 0 16 16">
@@ -65,7 +65,7 @@
                                                               </svg>
                                                               Cetak Rekapitulasi</button>
                                                           </form>
-                                                        {{-- @endcan --}}
+                                                        @endif
 
                                                     </td>
 

@@ -355,3 +355,7 @@
 .bg-terlambat{
   background-color: #ffc107 !important;
 }
+
+.bg-belum-dibaca{
+  background-color: rgba(0,0,0,.05);
+}

@@ -16,9 +16,9 @@
       <div class="col-sm-8">
         <select class="form-select @error('tingkat') is-invalid @enderror" name="tingkat" id="">
           <option value="" disabled selected>-- Pilih Tingkat Kelas --</option>
-          <option value="10" {{ '10' == old('tingkat') ? 'selected' : '' }}>10 (Sepuluh)</option>
-          <option value="11" {{ '11' == old('tingkat') ? 'selected' : '' }}>11 (Sebelas)</option>
-          <option value="12" {{ '12' == old('tingkat') ? 'selected' : '' }}>12 (Dua Belas)</option>
+          <option value="7" {{ '7' == old('tingkat') ? 'selected' : '' }}>7 (Tujuh)</option>
+          <option value="8" {{ '8' == old('tingkat') ? 'selected' : '' }}>8 (Delapan)</option>
+          <option value="9" {{ '9' == old('tingkat') ? 'selected' : '' }}>9 (Sembilan)</option>
         </select>
         @error('tingkat')
         <span class="invalid-feedback mt-1">

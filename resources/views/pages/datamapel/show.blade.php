@@ -5,7 +5,7 @@
     <div class="content-header">
         <div class="container-fluid">
 
-          <div class="row mb-2">
+          <div class="row">
             <div class="col-sm-6">
                 <h4 class="fw-bold poppins m-0">
                     <button class="btn btn-sm btn-link p-0 me-1" onclick="history.back()">
@@ -49,7 +49,8 @@
                                   <thead>
                                       <tr class="bg-dark text-white">
                                           <th scope="col">#</th>
-                                          <th scope="col">Nama Pembelajaran</th>
+                                          <th scope="col">Mapel</th>
+                                          <th scope="col">Kelas</th>
                                           <th scope="col">Guru Pengampu</th>
                                           <th scope="col">Aksi</th>
                                       </tr>
@@ -58,7 +59,8 @@
                                       @foreach ($pembelajaran as $item)
                                           <tr>
                                               <td>{{ $loop->iteration }}</td>
-                                              <td> <b>{{ $item->mapel->name }}</b> - {{ $item->kelas->name }}</td>
+                                              <td>{{ $item->mapel->name }}</td>
+                                              <td>{{ $item->kelas->name }}</td>
                                               <td>{{ $item->guru->name }}{{ $item->guru->gelar ? ', ' . $item->guru->gelar : '' }}
                                               </td>
                                               <td>

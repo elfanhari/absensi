@@ -25,4 +25,11 @@ class Siswa extends Model
     {
       return $this->hasMany(Absen::class);
     }
+
+    public static function getSiswaAktifKelas($kelasId)
+    {
+      return self::whereHas('user', function ($query) {
+          $query->where('is_aktif', true);
+      })->where('kelas_id', $kelasId)->get();
+    }
 }

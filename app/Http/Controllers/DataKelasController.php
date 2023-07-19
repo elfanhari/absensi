@@ -7,6 +7,7 @@ use App\Models\Guru;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Tapel;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DataKelasController extends Controller
@@ -69,7 +70,7 @@ class DataKelasController extends Controller
   {
       return view('pages.datakelas.show',[
         'kelas' => Kelas::find($id),
-        'siswa' => Siswa::where('kelas_id', $id)->orderBy('name', 'ASC')->get(),
+        'siswa' => Siswa::getSiswaAktifKelas($id),
         'role' => auth()->user()->role,
       ]);
   }

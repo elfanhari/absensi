@@ -9,7 +9,7 @@
     <div class="content-header">
         <div class="container-fluid">
 
-            <div class="row mb-2">
+            <div class="row mb-0">
                 <div class="col-sm-6">
                     <h4 class="fw-bold poppins m-0">
                         <a href="{{ route('absensi.show', ['role' => auth()->user()->role, 'absensi' => $pertemuan->pembelajaran->id]) }}" class="btn btn-sm btn-link p-0 me-1" >
@@ -124,6 +124,8 @@
                                                 <th scope="col" rowspan="2"
                                                     class="border-dark text-center align-middle bg-info">Nama Siswa</th>
                                                 <th scope="col" rowspan="2"
+                                                    class="border-dark text-center align-middle bg-info">L/P</th>
+                                                <th scope="col" rowspan="2"
                                                     class="border-dark text-center align-middle bg-info">Keterangan</th>
                                             </tr>
                                         </thead>
@@ -135,6 +137,9 @@
                                               <td class="border-dark text-uppercase">
                                                 <input type="hidden" name="siswa_id[]" value="{{ $item->id }}">
                                                 {{ $item->name }}
+                                              </td>
+                                              <td class="border-dark text-uppercase">
+                                                {{ $item->jk }}
                                               </td>
                                               <td class="border-dark">
                                                 <select name="keterangan[]" id="" class="form-control form-select">

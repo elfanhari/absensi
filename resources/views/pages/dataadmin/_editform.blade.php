@@ -71,7 +71,7 @@
       </div>
     </div>
     <div class="form-group row">
-      <label for="is_aktif" class="col-sm-4 col-form-label">Status Guru</label>
+      <label for="is_aktif" class="col-sm-4 col-form-label">Status Admin</label>
       <div class="col-sm-8">
         <select class="form-select form-control @error('is_aktif') is-invalid @enderror" name="is_aktif" id="">
           <option value="" disabled selected>-- Pilih Status --</option>

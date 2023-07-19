@@ -8,7 +8,7 @@
     <div class="content-header">
         <div class="container-fluid">
 
-          <div class="row mb-2">
+          <div class="row">
             <div class="col-sm-6">
                 <h4 class="fw-bold poppins m-0">
                     <button class="btn btn-sm btn-link p-0 me-1" onclick="history.back()">

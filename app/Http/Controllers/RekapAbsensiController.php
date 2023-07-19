@@ -9,6 +9,7 @@ use App\Models\Sekolah;
 use App\Models\Siswa;
 use PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class RekapAbsensiController extends Controller
 {
@@ -103,14 +104,14 @@ class RekapAbsensiController extends Controller
 
     function printRekapitulasi($role, $id) {
       $pembelajaran = Pembelajaran::whereId($id)->first();
-      $pdf = PDF::loadview('pages.rekapabsensi.print', [
+      $pdf = PDF::loadview('pages.rekapabsensi.print2', [
         'pembelajaran' => $pembelajaran,
         'sekolah' => Sekolah::first(),
-        'siswa' => Siswa::where('kelas_id', $pembelajaran->kelas_id)->get(),
+        'siswa' => Siswa::getSiswaAktifKelas($pembelajaran->kelas_id),
         'pertemuan' => Pertemuan::where('pembelajaran_id', $id)->orderBy('pertemuan_ke', 'ASC')->get(),
         'absen' => Absen::get(),
         'role' => auth()->user()->role,
       ])->setPaper('F4', 'Potrait');
-      return $pdf->stream('REKAP ABSENSI.pdf');
+      return $pdf->stream('REKAPITULASI ABSENSI -   ' . $pembelajaran->kelas->name . ' | ' . $pembelajaran->mapel->name .  '.pdf');
     }
 }

@@ -9,11 +9,20 @@
     <div class="content-header">
         <div class="container-fluid">
 
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Siswa Kelas {{ $kelas->name }}</h1>
-                </div>
+          <div class="row mb-0">
+            <div class="col-sm-6">
+                <h4 class="fw-bold poppins m-0">
+                    <button class="btn btn-sm btn-link p-0 me-1" onclick="history.back()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
+                            class="bi fw-bold bi-arrow-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                        </svg>
+                    </button>
+                    Siswa Kelas: {{ $kelas->name }}
+                </h4>
             </div>
+        </div>
 
             <div class="row">
                 <div class="col-md-6 offset-md-6">
@@ -34,10 +43,10 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
+                      @can('admin')
                         <div class="card-header">
 
 
-                            @can('admin')
                               <a href="{{ route('datasiswa.create', $role) }}"
                                   class="btn btn-sm float-left btn-primary btn-icon-split">
                                   <span class="icon text-white-30 pe-1 pb-1 pt-0" style="padding-top: 0.20rem !important;">
@@ -51,7 +60,6 @@
                                 </span>
                                 <span class="text">Siswa</span>
                               </a>
-                            @endcan
 
                             {{-- <h3 class="card-title">DataTable with default features</h3> --}}
                             {{-- <button class="btn btn-warning btn-sm float-right d-inline" data-bs-toggle="modal"
@@ -59,6 +67,8 @@
                                 Import Data
                             </button> --}}
                         </div>
+                        @endcan
+
                         <!-- /.card-header -->
                         <div class="card-body">
                             @if ($siswa->count() > 0)
@@ -193,7 +203,7 @@
                                                                                 <tr class="border-bottom">
                                                                                   <div class="text-center mb-3">
                                                                                     <img class="profile-user-img img-fluid img-circle"
-                                                                                    src="/img/default.jpg"
+                                                                                    src="/img/{{ $item->user->foto ?? 'profile.jpg' }}"
                                                                                     alt="User profile picture">
                                                                                   </div>
                                                                                 </tr>

@@ -12,10 +12,12 @@ use App\Http\Controllers\DataSiswaController;
 use App\Http\Controllers\DataTapelController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\RekapAbsensiController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -60,6 +62,8 @@ Route::group(['middleware' => ['auth']], function(){
   Route::put('/{role}/absensi/kelolaabsensi/{id}', [AbsensiController::class, 'updateAbsensi'])->name('kelolaabsensi.update');
   Route::resource('/{role}/rekapabsensi', RekapAbsensiController::class);
   Route::get('/{role}/rekapabsensi/print/{id}', [RekapAbsensiController::class, 'printRekapitulasi'])->name('rekapabsensi.print');
+
+  Route::resource('/{role}/notifikasi', NotifikasiController::class);
 
   Route::get('/{role}/profil', [ProfilController::class, 'index'])->name('profil.index');
   Route::put('/updateprofil/{id}', [ProfilController::class, 'update'])->name('profil.update');

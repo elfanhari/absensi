@@ -8,8 +8,8 @@
     <title>REKAPITULASI ABSENSI - {{ $pembelajaran->kelas->name }} | {{ $pembelajaran->mapel->name }}</title>
 
     {{-- <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet"> --}}
-    <link rel="stylesheet" href="adminlte/dist/css/adminlte.min.css">
-    <link rel="stylesheet" href="my-css/style.css">
+    {{-- <link rel="stylesheet" href="adminlte/dist/css/adminlte.min.css"> --}}
+    {{-- <link rel="stylesheet" href="my-css/style.css"> --}}
     {{-- <link rel="stylesheet" href="my-css/print.css"> --}}
 
     <style>
@@ -34,16 +34,16 @@
 
 <body style="font-family: 'Figtree';">
 
-    <div class="fs-11">
+    <div>
 
         <div class="mt-0">
-
+{{--
             <img src="img/{{ $sekolah->logo ?? 'logo.png' }}" alt="" style="width: 80px"
-                class="text-start position-absolute rounded-circle" />
-            <div class="text-center">
-                <h5 class="fw-bold mb-1">REKAPITULASI ABSENSI</h5>
-                <h5 class="fw-bold">{{ $sekolah->name ?? '' }}</h5>
-                <p>{{ $sekolah->alamat ?? '' }}</p>
+                class="text-start position-absolute rounded-circle" /> --}}
+            <div class="text-center" style="text-align: center">
+                <h3 class="fw-bold mb-1" style="margin-top: 0px; margin-bottom: 0px;">REKAPITULASI ABSENSI</h3>
+                <h3 class="fw-bold" style="margin-top: 0px; margin-bottom: 0px;">{{ $sekolah->name ?? '' }}</h3>
+                <p style="margin-top: 0px; margin-bottom: 0px;">{{ $sekolah->alamat ?? '' }}</p>
                 <hr />
             </div>
 
@@ -58,7 +58,7 @@
             <hr>
 
             <div class="table-responsive">
-                <table class="table table-sm table-striped table-hover table-bordered border-dark">
+                <table class="table table-sm table-striped table-hover table-bordered border-dark" border="1" cellspacing="0"  style="width: 100%">
                     <thead>
                         <tr class="bg-dark text-white">
                             <th scope="col" rowspan="2" class="border-dark text-center align-middle bg-info">#

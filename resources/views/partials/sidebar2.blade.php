@@ -197,13 +197,13 @@
 
               <li class="nav-item">
                 <a href="{{ '/guru/absensi' }}" class="nav-link {{ Request::is( 'guru/absensi*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
+                    <i class="nav-icon fas fa-book"></i>
                     <p>Kelola Absen</p>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ '/guru/rekapabsensi' }}" class="nav-link {{ Request::is( 'guru/rekapabsensi*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
+                    <i class="nav-icon fas fa-file"></i>
                     <p>Rekap Absen</p>
                 </a>
             </li>
@@ -226,15 +226,47 @@
                       </p>
                   </a>
               </li>
+              @can('admin')
+              <li class="nav-item">
+                      <a href="{{ '/admin/rekapabsensi' }}" class="nav-link {{ Request::is( 'admin/rekapabsensi*') ? 'active' : '' }}">
+                      <i class="nav-icon fas fa-file"></i>
+                      <p>
+                          Rekap Absensi
+                      </p>
+                  </a>
+              </li>
+              @endcan
               @endif
 
-            @endif
+              @endif
+
+              <li class="nav-header mt-2 fw-bold">NOTIFIKASI</li>
+                <li class="nav-item">
+                        <a href="{{ '/' . $user->role . '/notifikasi' }}" class="nav-link {{ Request::is( $user->role . '/notifikasi*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-bell"></i>
+                        <p>
+                            Notifikasi
+                            @if ($notifBelumDibaca->count() >= 1)
+                              <span class="badge badge-warning px-2 right">
+                                {{ count($notifBelumDibaca) }}
+                              </span>
+                            @endif
+                        </p>
+                    </a>
+                </li>
 
               <li class="nav-header mt-2 fw-bold">SAYA</li>
-              <li class="nav-item mb-3">
+              <li class="nav-item">
                   <a href="{{ '/' . $user->role . '/profil' }}" class="nav-link {{ Request::is( $user->role . '/profil*') ? 'active' : '' }}">
                       <i class="nav-icon fas fa-user"></i>
                       <p>Profil</p>
+                  </a>
+              </li>
+              <li class="nav-item mb-3">
+                  <a href="#" data-bs-toggle="modal"
+                  data-bs-target="#modal-logout" class="nav-link">
+                    <i class="nav-icon ion ion-log-out"></i>
+                      <p>Logout</p>
                   </a>
               </li>
           </ul>

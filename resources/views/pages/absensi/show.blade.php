@@ -9,7 +9,7 @@
     <div class="content-header">
         <div class="container-fluid">
 
-            <div class="row mb-2">
+            <div class="row mb-0">
                 <div class="col-sm-6">
                     <h4 class="fw-bold poppins m-0">
                         <a href="{{ route('absensi.index', auth()->user()->role) }}" class="btn btn-sm btn-link p-0 me-1">
@@ -155,6 +155,8 @@
                                                     class="border-dark text-center align-middle bg-info">NIS</th>
                                                 <th scope="col" rowspan="2"
                                                     class="border-dark text-center align-middle bg-info">Nama Siswa</th>
+                                                <th scope="col" rowspan="2"
+                                                    class="border-dark text-center align-middle bg-info">L/P</th>
 
                                                 @if ($pertemuan->count() >= 1)
                                                 <th scope="col" colspan="{{ count($pertemuan) }}"
@@ -164,7 +166,7 @@
                                                     Jumlah</th>
                                                 @endif
                                             </tr>
-                                            <tr class="bg-yellow">
+                                            <tr class="bg-secondary">
 
                                               @if ($pertemuan->count() >= 1)
                                                 @foreach ($pertemuan as $pert)
@@ -177,7 +179,7 @@
                                                             data-bs-toggle="modal"
                                                         @endif
                                                             >
-                                                            <div class="text-center align-middle">{{ $pert->pertemuan_ke }}
+                                                            <div class="text-center align-middle fw-bold">{{ $pert->pertemuan_ke }}
                                                             </div>
 
                                                         </div>
@@ -200,7 +202,7 @@
                                                                       Pembelajaran:
                                                                   </div>
                                                                   <div class="col-8">
-                                                                      : {{ $pembelajaran->mapel->name }}
+                                                                      : {{ $pembelajaran->mapel->singkatan }}
                                                                       - {{ $pembelajaran->kelas->name }}
                                                                   </div>
                                                                   <div class="col-4 fw-bold">
@@ -290,6 +292,8 @@
                                                             @csrf
                                                             @method('DELETE')
                                                               <input type="hidden" name="pertemuan_ke" id="" value="{{ $pert->pertemuan_ke }}" hidden>
+                                                              <button type="button" class="btn btn-secondary btn-sm"
+                                                                            data-bs-dismiss="modal">Batal</button>
                                                               <button type="submit" class="btn btn-danger btn-sm">Yakin, Hapus</button>
                                                             </form>
                                                           </div>
@@ -331,11 +335,11 @@
                                                         data-bs-placement="top" title="Hadir">
                                                   H
                                                 </th>
-                                                <th class="bg-secondary border-dark align-middle text-center" data-bs-toggle="tooltip"
+                                                <th class="bg-primary border-dark align-middle text-center" data-bs-toggle="tooltip"
                                                         data-bs-placement="top" title="Sakit">
                                                   S
                                                 </th>
-                                                <th class="bg-primary border-dark align-middle text-center" data-bs-toggle="tooltip"
+                                                <th class="bg-purple border-dark align-middle text-center" data-bs-toggle="tooltip"
                                                         data-bs-placement="top" title="Izin">
                                                   I
                                                 </th>
@@ -356,35 +360,55 @@
                                                     <td class="border-dark">{{ $loop->iteration }}</td>
                                                     <td class="border-dark">{{ $item->nis }}</td>
                                                     <td class="border-dark text-uppercase">{{ $item->name }}</td>
+                                                    <td class="border-dark">{{ $item->jk }}</td>
 
                                                   @if ($pertemuan->count() >= 1)
 
                                                     @foreach ($pertemuan as $pert)
                                                         <td class="border-dark">
                                                             @if ($item->absen->where('siswa_id', $item->id)->where('pertemuan_id', $pert->id)->count() < 1)
-                                                                <span class="badge bg-warning px-2">Belum <br>
-                                                                    Diinput</span>
+                                                                <span class="badge bg-secondary px-2">Belum <br> Diinput</span>
                                                             @else
-                                                                {{ $item->absen->where('siswa_id', $item->id)->where('pertemuan_id', $pert->id)->first()->keterangan }}
+                                                              @if ( $item->absen->where('siswa_id', $item->id)->where('pertemuan_id', $pert->id)->first()->keterangan == 'H')
+                                                                <span class="badge bg-green">
+                                                                  H
+                                                                </span>
+                                                              @elseif ( $item->absen->where('siswa_id', $item->id)->where('pertemuan_id', $pert->id)->first()->keterangan == 'S')
+                                                                <span class="badge bg-primary">
+                                                                  S
+                                                                </span>
+                                                              @elseif ( $item->absen->where('siswa_id', $item->id)->where('pertemuan_id', $pert->id)->first()->keterangan == 'I')
+                                                                <span class="badge bg-purple">
+                                                                  I
+                                                                </span>
+                                                              @elseif ( $item->absen->where('siswa_id', $item->id)->where('pertemuan_id', $pert->id)->first()->keterangan == 'A')
+                                                                <span class="badge bg-danger">
+                                                                  A
+                                                                </span>
+                                                              @elseif ( $item->absen->where('siswa_id', $item->id)->where('pertemuan_id', $pert->id)->first()->keterangan == 'T')
+                                                                <span class="badge bg-warning">
+                                                                  T
+                                                                </span>
+                                                              @endif
                                                             @endif
                                                         </td>
                                                     @endforeach
 
                                                     {{-- @foreach ($absen as $abs) --}}
                                                     <td class="border-dark">
-                                                        {{ $item->absen->where('keterangan', 'H')->count() < 1 ? '' : $item->absen->where('keterangan', 'H')->count() }}
+                                                        {{ $item->absen->where('keterangan', 'H')->whereIn('pertemuan_id', $pertemuan->pluck('id'))->count() < 1 ? '' : $item->absen->where('keterangan', 'H')->whereIn('pertemuan_id', $pertemuan->pluck('id'))->count() }}
                                                     </td>
                                                     <td class="border-dark">
-                                                        {{ $item->absen->where('keterangan', 'S')->count() < 1 ? '' : $item->absen->where('keterangan', 'S')->count() }}
+                                                        {{ $item->absen->where('keterangan', 'S')->whereIn('pertemuan_id', $pertemuan->pluck('id'))->count() < 1 ? '' : $item->absen->where('keterangan', 'S')->whereIn('pertemuan_id', $pertemuan->pluck('id'))->count() }}
                                                     </td>
                                                     <td class="border-dark">
-                                                        {{ $item->absen->where('keterangan', 'I')->count() < 1 ? '' : $item->absen->where('keterangan', 'I')->count() }}
+                                                        {{ $item->absen->where('keterangan', 'I')->whereIn('pertemuan_id', $pertemuan->pluck('id'))->count() < 1 ? '' : $item->absen->where('keterangan', 'I')->whereIn('pertemuan_id', $pertemuan->pluck('id'))->count() }}
                                                     </td>
                                                     <td class="border-dark">
-                                                        {{ $item->absen->where('keterangan', 'A')->count() < 1 ? '' : $item->absen->where('keterangan', 'A')->count() }}
+                                                        {{ $item->absen->where('keterangan', 'A')->whereIn('pertemuan_id', $pertemuan->pluck('id'))->count() < 1 ? '' : $item->absen->where('keterangan', 'A')->whereIn('pertemuan_id', $pertemuan->pluck('id'))->count() }}
                                                     </td>
                                                     <td class="border-dark">
-                                                        {{ $item->absen->where('keterangan', 'T')->count() < 1 ? '' : $item->absen->where('keterangan', 'T')->count() }}
+                                                        {{ $item->absen->where('keterangan', 'T')->whereIn('pertemuan_id', $pertemuan->pluck('id'))->count() < 1 ? '' : $item->absen->where('keterangan', 'T')->whereIn('pertemuan_id', $pertemuan->pluck('id'))->count() }}
                                                     </td>
                                                     {{-- @endforeach --}}
 

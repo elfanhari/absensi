@@ -66,4 +66,14 @@ class User extends Authenticatable
         return $this->hasOne(Siswa::class);
     }
 
+    public function notifikasiPengirim() //relasi
+    {
+        return $this->hasMany(Notifikasi::class, 'pengirim_id', 'id');
+    }
+
+    public function notifikasiPenerima() //relasi
+    {
+        return $this->hasMany(Notifikasi::class, 'penerima_id', 'id');
+    }
+
 }

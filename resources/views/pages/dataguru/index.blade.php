@@ -77,7 +77,7 @@
                                                       @if ($item->user->is_aktif == 1)
                                                           <span class="badge px-1 bg-success">AKTIF</span>
                                                       @else
-                                                          <span class="badge px-1 bg-info">NON-AKTIF</span>
+                                                          <span class="badge px-1 bg-danger">NON-AKTIF</span>
                                                       @endif
                                                   </td>
                                                     <td>
@@ -159,7 +159,7 @@
                                                                             aria-label="Close"></button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        Data: <p class="text-primary fw-bold">
+                                                                        Guru: <p class="text-primary fw-bold">
                                                                             {{ $item->name }}
                                                                         </p>
                                                                         Data tersebut tidak dapat dihapus. Karena sudah memiliki relasi!
@@ -187,7 +187,7 @@
                                                                             aria-label="Close"></button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        Data: <p class="text-primary fw-bold">
+                                                                        Guru: <p class="text-primary fw-bold">
                                                                             {{ $item->name }}
                                                                         </p>
                                                                         Apakah anda yakin data tersebut akan dihapus?
@@ -234,7 +234,7 @@
                                                                                 <tr class="border-bottom">
                                                                                   <div class="text-center mb-3">
                                                                                     <img class="profile-user-img img-circle"
-                                                                                    src="/img/{{ $item->foto ?? 'profile.jpg' }}" style="object-fit: fill"
+                                                                                    src="/img/{{ $item->user->foto ?? 'profile.jpg' }}" style="object-fit: fill"
                                                                                     alt="{{ $item->name }}">
                                                                                   </div>
                                                                                 </tr>
@@ -279,7 +279,7 @@
                                                                                                 class="badge px-1 bg-success">AKTIF</span>
                                                                                         @else
                                                                                             <span
-                                                                                                class="badge px-1 bg-info">NON-AKTIF</span>
+                                                                                                class="badge px-1 bg-danger">NON-AKTIF</span>
                                                                                         @endif
                                                                                     </td>
                                                                                 </tr>

@@ -30,7 +30,7 @@
                         <div class="card-header">
 
                             <a href="{{ route('datamapel.create') }}"
-                                class="btn btn-sm float-left btn-primary btn-icon-split">
+                                class="btn btn-sm float-left btn-primary btn-icon-split" data-bs-toggle="tooltip" data-bs-placement="right" title="Tambah Data Mapel">
                                 <span class="icon text-white-30 pe-1 pb-1 pt-0" style="padding-top: 0.20rem !important;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                         fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">

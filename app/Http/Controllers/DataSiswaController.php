@@ -153,6 +153,6 @@ class DataSiswaController extends Controller
   {
     $siswa = Siswa::find($id);
     User::where('id', $siswa->user_id)->delete();
-    return redirect(route('datasiswa.index', ['datasiswa' => $id, 'role' => $role]))->withInfo('Data Siswa: <b>' . Str::before($siswa->name, ' ') . '</b> berhasil dihapus!');
+    return redirect(route('datasiswa.index', ['datasiswa' => $id, 'role' => $role]))->withSuccess('Data Siswa: <b>' . Str::before($siswa->name, ' ') . '</b> berhasil dihapus!');
   }
 }

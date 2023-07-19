@@ -48,7 +48,7 @@
                                             @foreach ($pembelajaran as $item)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $item->mapel->name }}</td>
+                                                    <td>{{ $item->mapel->singkatan }}</td>
                                                     <td>{{ $item->kelas->name }}</td>
                                                     <td>{{ $item->guru->name }}
                                                     <td>{{ $item->kelas->tapel->tahun_pelajaran . ' - Semester ' . $item->kelas->tapel->semester  }}

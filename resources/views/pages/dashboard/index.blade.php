@@ -3,7 +3,7 @@
 @section('content')
     <div class="content-header">
         <div class="container-fluid">
-            <div class="row mb-1">
+            <div class="row mb-0">
                 <div class="col-sm-6">
                     <h4 class="fw-bold poppins m-0">Dashboard</h4>
                 </div>
@@ -37,7 +37,7 @@
                             <p>Data Siswa</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-bag"></i>
+                          <i class="ion ion-person-stalker"></i>
                         </div>
                         <a href="#" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
@@ -54,7 +54,7 @@
                             <p>Data Guru</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-bag"></i>
+                          <i class="ion ion-person-stalker"></i>
                         </div>
                         <a href="#" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
@@ -68,7 +68,7 @@
                             <p>Data Admin</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-bag"></i>
+                            <i class="ion ion-person"></i>
                         </div>
                         <a href="#" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
@@ -82,7 +82,7 @@
                             <p>Data Kelas</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-bag"></i>
+                          <i class="ion ion-log-in"></i>
                         </div>
                         <a href="#" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
@@ -96,7 +96,7 @@
                             <p>Data Tahun Pelajaran</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-bag"></i>
+                          <i class="ion ion-stats-bars"></i>
                         </div>
                         <a href="#" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
@@ -110,9 +110,9 @@
                             <p>Data Mata Pelajaran</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-bag"></i>
+                            <i class="ion ion-eye"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Lihat detail
+                        <a href="" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -124,11 +124,15 @@
                 <div class="col-md-3 col-sm-4 col-6">
                     <div class="small-box bg-purple">
                         <div class="inner">
+                            @if (Auth::user()->guru)
+                            <h3>{{ Auth::user()->guru->pembelajaran->count() }}</h3>
+                            @else
                             <h3>{{ $pembelajaran }}</h3>
+                            @endif
                             <p>Data Pembelajaran</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-bag"></i>
+                          <i class="ion ion-pie-graph"></i>
                         </div>
                         <a href="#" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
@@ -145,7 +149,7 @@
                             <p>Kehadiran Saya</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-bag"></i>
+                            <i class="ion ion-file"></i>
                         </div>
                         <a href="#" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
@@ -161,7 +165,7 @@
                             <p>Profil Saya</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-bag"></i>
+                            <i class="ion ion-person"></i>
                         </div>
                         <a href="{{ '/' . auth()->user()->role . '/profil' }}" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
