@@ -114,7 +114,7 @@ class DataAdminController extends Controller
         User::where('id', $admin->user_id)->update([
           'is_aktif' => $request->is_aktif,
           'username' => $request->username,
-          'password' => $request->password,
+          'password' => bcrypt($request->password),
         ]);
     } else {
         $admin->update($request->except('is_aktif', 'username', 'password'));

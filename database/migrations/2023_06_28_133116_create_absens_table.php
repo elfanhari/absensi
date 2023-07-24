@@ -17,13 +17,12 @@ class CreateAbsensTable extends Migration
     {
         Schema::create('absens', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pertemuan_id');
             $table->unsignedBigInteger('siswa_id');
-            $table->enum('keterangan', ['H', 'S', 'I', 'A', 'T']);
+            $table->date('tanggal');
+            $table->enum('keterangan', ['H', 'S', 'I', 'A']);
             $table->timestamps();
 
             // FK
-            $table->foreign('pertemuan_id')->references('id')->on('pertemuans')->onDelete('cascade');
             $table->foreign('siswa_id')->references('id')->on('siswas')->onDelete('cascade');
         });
     }

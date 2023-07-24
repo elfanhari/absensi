@@ -317,8 +317,25 @@
     float: left !important;
   }
 
+  .mt-xs-2 {
+    margin-top: 8px;
+  }
+
   .mt-xs-3 {
     margin-top: 16px;
+  }
+
+  .text-xs-large{
+    min-width: 200px;
+  }
+
+  .aksi-large{
+    min-width: 130px;
+  }
+
+  .my-xs-2{
+    margin-top: 8px;
+    margin-bottom: 8px;
   }
 }
 

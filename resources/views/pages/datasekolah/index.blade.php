@@ -12,7 +12,7 @@
             <div class="col-sm-6">
                 <h4 class="fw-bold poppins m-0">Data Sekolah</h4>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6 mt-xs-2">
                 @if (session()->has('success'))
                     <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
                         @include('_success')

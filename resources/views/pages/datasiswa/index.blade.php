@@ -14,14 +14,19 @@
             <div class="col-sm-6">
                 <h4 class="fw-bold poppins m-0">Data Siswa</h4>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6 mt-xs-2">
                 @if (session()->has('success'))
                     <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
                         @include('_success')
                         {!! session('success') !!}
                     </div>
                 @endif
-
+                @if (session()->has('failed'))
+                  <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+                      @include('_failed')
+                      {!! session('failed') !!}
+                  </div>
+                @endif
 
              {{-- Toast --}}
 
@@ -38,7 +43,7 @@
                 <div class="col-12">
                     <div class="card">
                       @can('admin')
-                        <div class="card-header">
+                        <div class="card-header justify-content-beetwen">
 
                             <a href="{{ route('datasiswa.create', $role) }}"
                                 class="btn btn-sm float-left btn-primary btn-icon-split" data-bs-toggle="tooltip" data-bs-placement="right" title="Tambah Data Siswa">
@@ -54,6 +59,13 @@
                                 <span class="text">Siswa</span>
                             </a>
 
+                            <button class="btn btn-warning btn-sm float-end" data-bs-toggle="modal" data-bs-target="#importSiswa">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload me-1" viewBox="0 0 16 16">
+                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                              </svg>
+                              Import Data Siswa
+                            </button>
 
                           </div>
                           @endcan
@@ -72,7 +84,7 @@
                                                 <th scope="col">Jenis Kelamin</th>
                                                 <th scope="col">Telepon</th>
                                                 <th scope="col">Status</th>
-                                                <th scope="col">Aksi</th>
+                                                <th scope="col" class="aksi-large">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -249,7 +261,7 @@
                                                                     </div>
                                                                     <div class="modal-footer">
 
-                                                                        {{-- @can('admin') --}}
+                                                                        @can('admin')
                                                                             <a href="{{ route('datasiswa.edit', ['datasiswa' => $item->id, 'role' => $role]) }}"
                                                                                 type="button" class=" btn btn-primary">
                                                                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -263,7 +275,7 @@
                                                                                         d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                                                                                 </svg> Edit
                                                                             </a>
-                                                                        {{-- @endcan --}}
+                                                                        @endcan
 
                                                                         <button type="button" class="btn btn-secondary"
                                                                             data-bs-dismiss="modal">Close</button>
@@ -298,6 +310,39 @@
 
         </div>
     </section>
+
+ {{-- Modal Import Data --}}
+ <div class="modal fade" id="importSiswa" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+      <form action="{{ route('datasiswa.import') }}" method="POST" enctype="multipart/form-data">
+      @csrf
+
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title poppins fw-semibold" id="exampleModalLabel">Import Data Siswa</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <div class="alert alert-info alert-dismissible fade show" role="alert">
+                      <strong>Penting!</strong> File yang diunggah harus berupa dokumen Microsoft Excel dengan ekstensi
+                      .xlsx
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                  <div class="input-group mb-3">
+                      <input type="file" name="file" class="form-control" id="inputGroupFile01" required>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                  <button type="submit" class="btn btn-primary">Upload</button>
+              </div>
+          </div>
+
+      </form>
+
+  </div>
+</div>
 
     {{-- <script>
       window.onload = (event) => {

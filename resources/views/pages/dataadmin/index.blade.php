@@ -12,7 +12,7 @@
             <div class="col-sm-6">
                 <h4 class="fw-bold poppins m-0">Data Admin</h4>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6 mt-xs-2">
                 @if (session()->has('success'))
                     <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
                         @include('_success')
@@ -61,7 +61,7 @@
                                                 <th scope="col">NUPTK</th>
                                                 <th scope="col">Telepon</th>
                                                 <th scope="col">Status</th>
-                                                <th scope="col">Aksi</th>
+                                                <th scope="col" class="aksi-large">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>

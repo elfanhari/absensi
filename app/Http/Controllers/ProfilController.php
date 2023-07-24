@@ -6,6 +6,7 @@ use App\Http\Requests\UpdateProfilRequest;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 use App\Models\Guru;
+use App\Models\Piket;
 use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,9 @@ class ProfilController extends Controller
     }
     if (auth()->user()->role == 'siswa') {
       Siswa::where('user_id', $id)->update($data);
+    }
+    if (auth()->user()->role == 'piket') {
+      Piket::where('user_id', $id)->update($data);
     }
 
     return back()->withSuccess('Profil anda berhasil diperbarui!');

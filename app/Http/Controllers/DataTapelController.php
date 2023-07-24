@@ -21,8 +21,7 @@ class DataTapelController extends Controller
     } else{
         $tapel = Tapel::orderBy('tahun_pelajaran', 'ASC')->get();
         $kelas = Kelas::get();
-        $mapel = Mapel::get();
-        return view('pages.datatapel.index', compact('tapel', 'mapel', 'kelas'));
+        return view('pages.datatapel.index', compact('tapel', 'kelas'));
     }
   }
 
@@ -45,24 +44,31 @@ class DataTapelController extends Controller
   public function store(Request $request)
   {
     if (!$request->filled([
-      'tahun_pelajaran',
-      'semester',
+        'tapel1',
+        'tapel2',
+        'semester',
       ])) {
         return back()->withFailed('Formulir tidak boleh kosong!');
     }
 
     $request->validate([
-      'tahun_pelajaran' => 'required',
+      'tapel1' => 'required',
+      'tapel2' => 'required',
       'semester' => 'required',
     ]);
 
-    $tahun_pelajaran = Tapel::where('tahun_pelajaran', $request->tahun_pelajaran)->get()->pluck('semester');
+    $tahun_pelajaran = Tapel::where('tahun_pelajaran', $request->tapel1 . '/' . $request->tapel2 )->get()->pluck('semester');
     $semesterUdahAda = $request->semester;
 
     if ($tahun_pelajaran->contains($semesterUdahAda)) {
       return back()->withFailed('Data yang ingin Anda tambahkan sudah ada!');
+    } elseif ((intval($request->tapel1) + 1) !== intval($request->tapel2)){
+      return back()->withFailed('Pengisian Tahun pelajaran harus sesuai ketentuan!');
     } else {
-      $tapel = Tapel::create($request->all());
+      $tapel = Tapel::create([
+        'tahun_pelajaran' => $request->tapel1 . '/' . $request->tapel2,
+        'semester' => $request->semester
+      ]);
       $tapel;
       return redirect(route('datatapel.index'))->withSuccess('Data Tapel: <b>' . $tapel->tahun_pelajaran . ' Semester ' . $tapel->semester . '</b> berhasil ditambahkan!');
     }
@@ -87,6 +93,7 @@ class DataTapelController extends Controller
    */
   public function edit($id)
   {
+      abort('403');
       return view('pages.datatapel.edit',[
         'tapel' => Tapel::find($id),
       ]);
@@ -102,11 +109,15 @@ class DataTapelController extends Controller
   public function update(Request $request, $id)
   {
       $request->validate([
-        'tahun_pelajaran' => 'required',
+        'tapel1' => 'required',
+        'tapel2' => 'required',
         'semester' => 'required',
       ]);
       $tapel = Tapel::find($id);
-      $tapel->update($request->all());
+      $tapel->update([
+        'tahun_pelajaran' => $request->tapel1 . '/' . $request->tapel2,
+        'semester' => $request->semester
+      ]);
       return redirect(route('datatapel.index'))->withSuccess('Data Tapel: <b>' . $tapel->tahun_pelajaran . ' - Semester ' . $tapel->semester . '</b> berhasil diperbarui!');
   }
 

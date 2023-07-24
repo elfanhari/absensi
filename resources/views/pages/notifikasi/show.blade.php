@@ -110,6 +110,8 @@
                           Administrator
                         @elseif ($notif->userPengirim->role == 'guru')
                           {{ $notif->userPengirim->guru->name }}
+                        @elseif ($notif->userPengirim->role == 'piket')
+                          {{ $notif->userPengirim->piket->name }}
                         @elseif ($notif->userPengirim->role == 'siswa')
                           {{ $notif->userPengirim->siswa->name }}
                         @endif

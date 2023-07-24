@@ -1,6 +1,22 @@
 <div class="row">
   <div class="col-md-6">
     <div class="form-group row">
+      <label for="tapel_id" class="col-sm-4 col-form-label">Jurusan</label>
+      <div class="col-sm-8">
+        <select class="form-select @error('jurusan_id') is-invalid @enderror" name="jurusan_id" id="exampleSelectBorder">
+          <option value="" disabled selected>-- Pilih Jurusan --</option>
+          @foreach ($jurusan as $item)
+            <option value="{{ $item->id }}" {{ $item->id == old('jurusan_id', $kelas->jurusan_id) ? 'selected' : ''}}>{{ $item->singkatan }}</option>
+          @endforeach
+        </select>
+        @error('jurusan_id')
+        <span class="invalid-feedback mt-1">
+          {{ $message }}
+        </span>
+        @enderror
+      </div>
+    </div>
+    <div class="form-group row">
       <label for="abc" class="col-sm-4 col-form-label">Nama Kelas</label>
       <div class="col-sm-8">
         <input type="text" value="{{ old('name', $kelas->name) }}" class="form-control @error('name') is-invalid @enderror " name="name" id="name" placeholder="Masukkan nama kelas">
@@ -16,9 +32,9 @@
       <div class="col-sm-8">
         <select class="form-select @error('tingkat') is-invalid @enderror" name="tingkat" id="">
           <option value="" disabled selected>-- Pilih Tingkat Kelas --</option>
-          <option value="7" {{ '7' == old('tingkat', $kelas->tingkat) ? 'selected' : '' }}>7 (Tujuh)</option>
-          <option value="8" {{ '8' == old('tingkat', $kelas->tingkat) ? 'selected' : '' }}>8 (Delapan)</option>
-          <option value="9" {{ '9' == old('tingkat', $kelas->tingkat) ? 'selected' : '' }}>9 (Sembilan)</option>
+          <option value="10" {{ '10' == old('tingkat', $kelas->tingkat) ? 'selected' : '' }}>10 (Sepuluh)</option>
+          <option value="11" {{ '11' == old('tingkat', $kelas->tingkat) ? 'selected' : '' }}>11 (Sebelas)</option>
+          <option value="12" {{ '12' == old('tingkat', $kelas->tingkat) ? 'selected' : '' }}>12 (Dua Belas)</option>
         </select>
         @error('tingkat')
         <span class="invalid-feedback mt-1">

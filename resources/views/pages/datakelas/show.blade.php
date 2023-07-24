@@ -84,7 +84,7 @@
                                                 <th scope="col">Jenis Kelamin</th>
                                                 <th scope="col">Telepon</th>
                                                 <th scope="col">Status</th>
-                                                <th scope="col">Aksi</th>
+                                                <th scope="col"  class="aksi-large">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -248,11 +248,9 @@
                                                                                     <td class="fw-bold">Status Siswa</td>
                                                                                     <td style="width: 1px;">:</td>
                                                                                     <td>
-                                                                                      @if ($item->status == '1')
+                                                                                      @if ($item->user->is_aktif == true)
                                                                                         <span class="badge px-1 bg-success">AKTIF</span>
-                                                                                        @elseif ($item->status == '2')
-                                                                                        <span class="badge px-1 bg-info">LULUS</span>
-                                                                                        @else
+                                                                                      @else
                                                                                         <span class="badge px-1 bg-info">NON-AKTIF</span>
                                                                                       @endif
                                                                                     </td>

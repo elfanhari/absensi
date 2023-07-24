@@ -66,6 +66,11 @@ class User extends Authenticatable
         return $this->hasOne(Siswa::class);
     }
 
+    public function piket()
+    {
+        return $this->hasOne(Piket::class);
+    }
+
     public function notifikasiPengirim() //relasi
     {
         return $this->hasMany(Notifikasi::class, 'pengirim_id', 'id');

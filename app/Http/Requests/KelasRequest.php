@@ -29,6 +29,7 @@ class KelasRequest extends FormRequest
 
       return [
           'name' => ['required', $unique],
+          'jurusan_id' => ['required'],
           'guru_id' => ['required'],
           'tingkat' => ['required'],
           'tapel_id' => ['required'],

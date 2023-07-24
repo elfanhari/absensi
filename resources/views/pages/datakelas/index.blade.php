@@ -9,7 +9,7 @@
             <div class="col-sm-6">
                 <h4 class="fw-bold poppins m-0">Data Kelas</h4>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6 mt-xs-2">
                 @if (session()->has('success'))
                     <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
                         @include('_success')
@@ -27,9 +27,8 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
+                      @can('admin')
                         <div class="card-header">
-
-                            @can('admin')
                               <a href="{{ route('datakelas.create', $role) }}"
                               class="btn btn-sm float-left btn-primary btn-icon-split" data-bs-toggle="tooltip" data-bs-placement="right" title="Tambah Data Kelas">
                                   <span class="icon text-white-30 pe-1 pb-1 pt-0" style="padding-top: 0.20rem !important;">
@@ -43,10 +42,8 @@
                                 </span>
                                 <span class="text">Kelas</span>
                               </a>
+                            </div>
                             @endcan
-
-
-                        </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             @if ($kelas->count() < 1)
@@ -57,17 +54,21 @@
                                   <thead>
                                       <tr class="bg-dark text-white">
                                           <th scope="col">#</th>
+                                          <th scope="col">ID KELAS</th>
                                           <th scope="col">Nama Kelas</th>
+                                          <th scope="col">Jurusan</th>
                                           <th scope="col">Wali Kelas</th>
                                           <th scope="col">Tahun Pelajaran</th>
-                                          <th scope="col">Aksi</th>
+                                          <th scope="col"  class="aksi-large">Aksi</th>
                                       </tr>
                                   </thead>
                                   <tbody>
                                       @foreach ($kelas as $item)
                                           <tr>
                                               <td>{{ $loop->iteration }}</td>
+                                              <td>{{ $item->id }}</td>
                                               <td>{{ $item->name }}</td>
+                                              <td>{{ $item->jurusan->singkatan }}</td>
                                               <td>{{ $item->guru->name }}{{ $item->guru->gelar ? ', ' . $item->guru->gelar : '' }}</td>
                                               <td>{{ $item->tapel->tahun_pelajaran }} - Semester {{ $item->tapel->semester }}</td>
                                               <td>

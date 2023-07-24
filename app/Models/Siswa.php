@@ -11,6 +11,17 @@ class Siswa extends Model
 
     protected $guarded = ['id'];
 
+    public function hitungJumlahAbsen($tanggalAwal, $tanggalAkhir, $keterangan)
+    {
+        return $this->absen()
+            ->whereBetween('tanggal', [$tanggalAwal, $tanggalAkhir])
+            ->where('keterangan', $keterangan)
+            ->whereNotIn('tanggal', function ($query) {
+              $query->select('tgl')->from('hari_liburs');
+            })
+            ->count();
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

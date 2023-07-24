@@ -16,15 +16,15 @@ class SekolahSeeder extends Seeder
     {
       collect([
         [
-          'name' => 'MTs Rekayasa',
-          'npsn' => '69354090',
-          'nss' => '12345678',
-          'telepon' => '02652701285',
-          'email' => 'mts-rekayasa@gmail.com',
-          'alamat' => 'Jl. Raya Indonesia, Banjar',
-          'kodepos' => '46385',
-          'website' => 'www.mts-rekayasa.sch.id',
-          'kepsek' => 'Deni Ramdani, M.M',
+          'name' => 'SMK NEGERI 54 JAKARTA',
+          'npsn' => '20100156',
+          // 'nss' => '12345678',
+          'telepon' => '(021) 4248741',
+          'email' => 'info@smkn54jkt.sch.id',
+          'alamat' => 'Jl.Bend. Jago No.53, RT.14/RW.1, Serdang, Kec. Kemayoran, Kota Jakarta Pusat, DKI Jakarta',
+          'kodepos' => '10650',
+          'website' => 'smkn54jkt.sch.id',
+          'kepsek' => 'Hamidah Nasir, S.Pd',
           'nipkepsek' => '197607092004015009',
         ],
       ])->each(function($sekolah){

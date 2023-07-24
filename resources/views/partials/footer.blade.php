@@ -1,5 +1,5 @@
 <footer class="main-footer">
-  <strong>Copyright &copy; 2023 <a href="#">MTs Rekayasa</a>.</strong>
+  <strong>Copyright &copy; 2023 <a href="#">SMKN 54 JAKARTA</a>.</strong>
   {{-- All rights reserved. --}}
   <div class="float-right d-none d-sm-inline-block">
       {{-- <b>Version</b> 3.2.0 --}}

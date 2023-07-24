@@ -8,6 +8,7 @@
     $admin = Auth::user()->admin;
     $guru = Auth::user()->guru;
     $siswa = Auth::user()->siswa;
+    $piket = Auth::user()->piket;
 
 
     if ($admin) {
@@ -16,6 +17,8 @@
         $userLogin = $guru;
     } elseif ($siswa) {
         $userLogin = $siswa;
+    } elseif ($piket) {
+        $userLogin = $piket;
     }
 
     $allMyNotif = Notifikasi::semuaNotifSaya(Auth::user()->id);
@@ -31,7 +34,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-        Absensi MTs Rekayasa
+        Absensi SMKN 54 JAKARTA
     </title>
 
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -73,6 +76,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Sen:wght@400;700;800&display=swap');
     </style>
 
+    @yield('css')
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed" style="font-family: 'Figtree';">
@@ -194,8 +198,7 @@
     <script src="/adminlte/dist/js/pages/dashboard.js"></script>
     <script src="/extensions/simple-datatables/umd/simple-datatables.js"></script>
     <script src="/extensions/simple-datatables.js"></script>
-
-
+    @yield('js')
 
 </body>
 

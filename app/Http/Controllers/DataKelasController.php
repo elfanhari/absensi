@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\KelasRequest;
 use App\Models\Guru;
+use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Tapel;
@@ -41,9 +42,13 @@ class DataKelasController extends Controller
    */
   public function create()
   {
+      if(auth()->user()->role !== 'admin'){
+        abort('403');
+      }
       return view('pages.datakelas.create', [
         'guru' => Guru::doesntHave('kelas')->get(),
         'tapel' => Tapel::get(),
+        'jurusan' => Jurusan::get(),
         'role' => auth()->user()->role,
       ]);
   }
@@ -68,6 +73,9 @@ class DataKelasController extends Controller
    */
   public function show($role, $id)
   {
+      if (auth()->user()->role === 'walisiswa' || auth()->user()->role === 'siswa') {
+        abort('403');
+      }
       return view('pages.datakelas.show',[
         'kelas' => Kelas::find($id),
         'siswa' => Siswa::getSiswaAktifKelas($id),
@@ -83,14 +91,16 @@ class DataKelasController extends Controller
    */
   public function edit($role, $id)
   {
-    // $kelasDiEdit = ;
-    // $waliKelas = Guru::whereId($kelasDiEdit->guru_id);
+    if(auth()->user()->role !== 'admin'){
+      abort('403');
+    }
 
     return view('pages.datakelas.edit', [
       'kelas' => Kelas::find($id),
       // 'walikelas' => $waliKelas,
       'guru' => Guru::doesntHave('kelas')->get(),
       'tapel' => Tapel::get(),
+      'jurusan' => Jurusan::get(),
       'role' => auth()->user()->role,
     ]);
   }

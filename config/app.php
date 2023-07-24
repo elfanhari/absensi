@@ -168,6 +168,8 @@ return [
          * Package Service Providers...
          */
 
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -234,6 +236,7 @@ return [
 
         // Third Party
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Excel' => Maatwebsite\Excel\Facade\Excel::class,
 
     ],
 

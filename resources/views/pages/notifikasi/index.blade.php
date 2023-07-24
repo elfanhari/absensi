@@ -132,7 +132,7 @@
                                 <tbody>
                                   @foreach ($allMyNotif as $item)
                                     <tr class="{{ $item->dibaca == false ? 'bg-belum-dibaca' : '' }}">
-                                        <td>
+                                        <td style="min-width: 120px">
                                           <form action="{{ route('notifikasi.destroy', ['role' => Auth::user()->role, 'notifikasi' =>  $item->id]) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
@@ -142,7 +142,7 @@
                                               </button>
                                             </form>
 
-                                            <a href="{{ route('notifikasi.show', ['role' => Auth::user()->role, 'notifikasi' =>  $item->id]) }}" type="submit" class="ms-3 btn btn-primary btn-sm d-inline" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail">
+                                            <a href="{{ route('notifikasi.show', ['role' => Auth::user()->role, 'notifikasi' =>  $item->id]) }}" type="submit"  class="ms-3 btn btn-primary btn-sm d-inline" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail">
                                               <svg xmlns="http://www.w3.org/2000/svg" width="12"
                                               height="13" fill="currentColor"
                                               class="bi bi-list-columns-reverse" viewBox="0 0 16 16">

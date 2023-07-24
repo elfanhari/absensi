@@ -43,5 +43,13 @@ class UpdateProfilRequest extends FormRequest
           // 'telepon' => ['required', 'numeric'],
         ];
       }
+
+      elseif ($role == 'piket') {
+        return [
+          // 'token' => ['required'],
+          'name' => ['required'],
+          // 'telepon' => ['required', 'numeric'],
+        ];
+      }
     }
 }

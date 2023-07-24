@@ -3,12 +3,27 @@
     <div class="form-group row">
       <label for="tahun_pelajaran" class="col-sm-5 col-form-label">Tahun Pelajaran</label>
       <div class="col-sm-7">
-        <input type="text" value="{{ old('tahun_pelajaran') }}" class="form-control @error('tahun_pelajaran') is-invalid @enderror " name="tahun_pelajaran" id="" placeholder="Masukkan Tahun Pelajaran" required>
-        @error('tahun_pelajaran')
-        <span class="invalid-feedback mt-1">
-          {{ $message }}
-        </span>
-        @enderror
+        <div class="row">
+          <div class="col-5">
+            <input type="number" value="{{ old('tapel1') }}" class="form-control @error('tapel1') is-invalid @enderror " name="tapel1" id="" placeholder="20xx" required>
+            @error('tapel1')
+            <span class="invalid-feedback mt-1">
+              {{ $message }}
+            </span>
+            @enderror
+          </div>
+          <div class="col-2 text-center align-middle">
+            <h5>/</h5>
+          </div>
+          <div class="col-5">
+            <input type="number" value="{{ old('tapel2') }}" class="form-control @error('tapel2') is-invalid @enderror " name="tapel2" id="" placeholder="20xx" required>
+            @error('tapel2')
+            <span class="invalid-feedback mt-1">
+              {{ $message }}
+            </span>
+            @enderror
+          </div>
+        </div>
       </div>
     </div>
     <div class="form-group row">

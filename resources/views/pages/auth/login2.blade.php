@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ABSENSI MTs Rekayasa</title>
+    <title>ABSENSI SMKN 54 JAKARTA</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
@@ -197,9 +197,9 @@
             </div>
             <div id="page" class="d-flex mx-0 align-items-left justify-content-left width-right mx-lg-0">
                 <div class="right mx-lg-0 mx-auto">
-                    <div class="align-items-center justify-content-center mb-3 pb-3 d-lg-none d-flex">
+                    <div class="align-items-center justify-content-center pt-0 mb-3 pb-3 d-lg-none d-flex">
                         <img class="img-fluid rounded-circle" src="/img/logo.png" alt=""
-                            style="width: 200px;" />
+                            style="width: 100px;" />
                     </div>
                     <h3 class="title-text text-center mt-xs-3">Login Pengguna</h3>
                     <p class="caption-text text-center">
@@ -248,9 +248,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-end" style="margin-top: 0.75rem">
+                        {{-- <div class="d-flex justify-content-end" style="margin-top: 0.75rem">
                             <a href="/lupapassword" class="forgot-password">Lupa password?</a>
-                        </div>
+                        </div> --}}
                         <button class="btn btn-fill text-white d-block w-100" type="submit">
                             Login
                         </button>

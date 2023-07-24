@@ -3,9 +3,9 @@
         <div class="form-group row">
             <label for="tahun_pelajaran" class="col-sm-5 col-form-label">Tahun Pelajaran</label>
             <div class="col-sm-7">
-                <input type="text" value="{{ old('tahun_pelajaran', $tapel->tahun_pelajaran) }}"
+                <input type="number" value="{{ old('tahun_pelajaran', $tapel->tahun_pelajaran) }}"
                     class="form-control @error('tahun_pelajaran') is-invalid @enderror " name="tahun_pelajaran"
-                    id="" placeholder="Masukkan Tahun Pelajaran" required readonly>
+                    id="" placeholder="20xx" required readonly>
                 @error('tahun_pelajaran')
                     <span class="invalid-feedback mt-1">
                         {{ $message }}

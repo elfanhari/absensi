@@ -21,16 +21,14 @@ class DataGuruController extends Controller
    */
   public function index()
   {
-      if (auth()->user()->role !== 'admin') {
+      if(auth()->user()->role !== 'admin'){
         abort('403');
-      } else{
-        return view('pages.dataguru.index', [
-          'guru' => Guru::orderBy('name', 'ASC')->get(),
-          'kelas' => Kelas::get(),
-          'pembelajaran' => Pembelajaran::get(),
-          'role' => Auth::user()->role,
-        ]);
       }
+      return view('pages.dataguru.index', [
+        'guru' => Guru::orderBy('name', 'ASC')->get(),
+        'kelas' => Kelas::get(),
+        'role' => Auth::user()->role,
+      ]);
   }
 
   /**
@@ -40,6 +38,9 @@ class DataGuruController extends Controller
    */
   public function create()
   {
+      if(auth()->user()->role !== 'admin'){
+        abort('403');
+      }
       $role = auth()->user()->role;
       return view('pages.dataguru.create', compact('role'));
   }
@@ -94,6 +95,9 @@ class DataGuruController extends Controller
    */
   public function edit($role, $id)
   {
+      if(auth()->user()->role !== 'admin'){
+        abort('403');
+      }
       $guru = Guru::find($id);
       $role = auth()->user()->role;
       $urlSebelumnya = URL::previous();

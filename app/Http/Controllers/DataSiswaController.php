@@ -10,6 +10,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Imports\SiswaImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DataSiswaController extends Controller
 {
@@ -20,7 +22,7 @@ class DataSiswaController extends Controller
    */
   public function index()
   {
-      if(auth()->user()->role === 'siswa'){
+      if(auth()->user()->role === 'siswa' || auth()->user()->role === 'piket'){
         abort('403');
       } else{
         return view('pages.datasiswa.index', [
@@ -37,6 +39,10 @@ class DataSiswaController extends Controller
    */
   public function create()
   {
+      if(auth()->user()->role === 'siswa' || auth()->user()->role === 'piket'){
+        abort('403');
+      }
+
       return view('pages.datasiswa.create', [
         'kelas' => Kelas::orderBy('tingkat', 'ASC')->orderBy('name', 'ASC')->get(),
         'role' => Auth::user()->role,
@@ -95,6 +101,9 @@ class DataSiswaController extends Controller
    */
   public function edit($role, $id)
   {
+    if(auth()->user()->role === 'siswa' || auth()->user()->role === 'piket'){
+      abort('403');
+    }
       return view('pages.datasiswa.edit', [
         'siswa' => Siswa::find($id),
         'kelas' => Kelas::get(),
@@ -129,7 +138,7 @@ class DataSiswaController extends Controller
         $dataUser = [
           'username' => $request->username,
           'is_aktif' => $request->is_aktif,
-          'password' => $request->password,
+          'password' => bcrypt($request->password),
         ];
       } else {
         $dataUser = [
@@ -137,7 +146,6 @@ class DataSiswaController extends Controller
           'is_aktif' => $request->is_aktif,
         ];
       }
-      // dd($request->all());
       Siswa::find($id)->update($dataSiswa);
       User::where('id', $request->user_id)->update($dataUser);
       return redirect(route('datasiswa.index',['datasiswa' => $id, 'role' => $role]))->withSuccess('Data Siswa: <b>' . Str::before($request->name, ' ') . '</b> berhasil diperbarui!');
@@ -154,5 +162,21 @@ class DataSiswaController extends Controller
     $siswa = Siswa::find($id);
     User::where('id', $siswa->user_id)->delete();
     return redirect(route('datasiswa.index', ['datasiswa' => $id, 'role' => $role]))->withSuccess('Data Siswa: <b>' . Str::before($siswa->name, ' ') . '</b> berhasil dihapus!');
+  }
+
+  public function import(Request $request)
+  {
+    $request->validate([
+      'file' => ['required', 'file', 'distinct']
+    ]);
+
+    $file = $request->file('file');
+    if ($file->getClientOriginalExtension() != 'xlsx') {
+        return back()->withFailed('Import Gagal! File yang anda masukkan tidak sesuai ketentuan!');
+    }
+
+    Excel::import(new SiswaImport, request()->file('file'));
+    return redirect()->back()->with('success', 'Data siswa berhasil diimport!');
+
   }
 }

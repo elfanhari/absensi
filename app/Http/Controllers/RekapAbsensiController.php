@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Absen;
+use App\Models\HariLibur;
+use App\Models\Kelas;
 use App\Models\Pembelajaran;
 use App\Models\Pertemuan;
 use App\Models\Sekolah;
 use App\Models\Siswa;
+use Carbon\Carbon;
 use PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Exports\AbsensiExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RekapAbsensiController extends Controller
 {
@@ -23,16 +29,15 @@ class RekapAbsensiController extends Controller
       if(auth()->user()->role === 'siswa'){
         abort('403');
       } else{
-
-        if(auth()->user()->role === 'admin'){
-          $pembelajaran = Pembelajaran::orderBy('mapel_id', 'ASC')->get();
-        } else{
-          $pembelajaran = Pembelajaran::where('guru_id', auth()->user()->guru->id)->orderBy('mapel_id', 'ASC')->get();
-        }
-
         $role = auth()->user()->role;
-        $pertemuan = Pertemuan::get();
-        return view('pages.rekapabsensi.index', compact('pembelajaran', 'role', 'pertemuan'));
+        if(auth()->user()->role === 'admin' || auth()->user()->role === 'piket'){
+          $kelas = Kelas::get();
+        } elseif(auth()->user()->role === 'guru'){
+          $kelas = Kelas::where('guru_id', Auth::user()->guru->id)->get();
+        } elseif(auth()->user()->role === 'siswa'){
+          $kelas = Kelas::where('id', Auth::user()->siswa->kelas_id)->get();
+        }
+        return view('pages.rekapabsensi.index', compact('role', 'kelas'));
       }
     }
 
@@ -102,16 +107,92 @@ class RekapAbsensiController extends Controller
         //
     }
 
-    function printRekapitulasi($role, $id) {
-      $pembelajaran = Pembelajaran::whereId($id)->first();
-      $pdf = PDF::loadview('pages.rekapabsensi.print2', [
-        'pembelajaran' => $pembelajaran,
-        'sekolah' => Sekolah::first(),
-        'siswa' => Siswa::getSiswaAktifKelas($pembelajaran->kelas_id),
-        'pertemuan' => Pertemuan::where('pembelajaran_id', $id)->orderBy('pertemuan_ke', 'ASC')->get(),
+    function per1bulan(Request $request, $role, $id) {
+
+      $year = $request->year;
+      $month = $request->bulan;
+
+      $startDate = Carbon::create($year, $month, 1);
+      $endDate = $startDate->copy()->endOfMonth();
+      $datesInMonth = [];
+      while ($startDate->lte($endDate)) {
+        $datesInMonth[] = $startDate->toDateString();
+        $startDate->addDay();
+      }
+
+      $kelas = Kelas::whereId($id)->first();
+
+      $pdf = PDF::loadview('pages.rekapabsensi.per1bulan.print',[
+        'kelas' => $kelas,
+        'monthIndo' => Carbon::create()->month($month)->locale('id')->isoFormat('MMMM') . ' ' . $year,
+        'month' => $month,
+        'months' => $datesInMonth,
+        'siswa' => Siswa::where('kelas_id', $kelas->id)->orderBy('name', 'ASC')->get(),
+        'role' => Auth::user()->role,
+        'libur' => HariLibur::get(),
         'absen' => Absen::get(),
-        'role' => auth()->user()->role,
+        'sekolah' => Sekolah::first()
       ])->setPaper('F4', 'Potrait');
-      return $pdf->stream('REKAPITULASI ABSENSI -   ' . $pembelajaran->kelas->name . ' | ' . $pembelajaran->mapel->name .  '.pdf');
+      return $pdf->stream('REKAPITULASI ABSENSI -  ' . $kelas->name .  ' -' . Carbon::create()->month($month)->locale('id')->isoFormat('MMMM') . ' ' . $year . '.pdf');
     }
+
+    function per3bulan(Request $request, $role, $id) {
+      $bulanA = intval(Str::before($request->bulan, '-'));
+      $strBulanA = Carbon::create()->month($bulanA)->locale('id')->isoFormat('MMMM');
+
+      $bulanB = intval(Str::before($request->bulan, '-')) + 1;
+      $strBulanB = Carbon::create()->month($bulanB)->locale('id')->isoFormat('MMMM');
+
+      $bulanC = intval(Str::after($request->bulan, '-'));
+      $strBulanC = Carbon::create()->month($bulanC)->locale('id')->isoFormat('MMMM');
+
+      $tglAwal = date('Y-m-01', strtotime( $request->year . '-' . $bulanA));
+      $tglAkhir = date('Y-m-d', strtotime('-1 day', strtotime('+3 month', strtotime($tglAwal))));
+
+      $kelas = Kelas::whereId($id)->first();
+      $pdf = PDF::loadview('pages.rekapabsensi.per3bulan.print',[
+        'kelas' => $kelas,
+        'siswa' => Siswa::where('kelas_id', $kelas->id)->get(),
+        'periode' => $strBulanA . ', ' . $strBulanB . ', dan ' . $strBulanC . ' ' . $request->year,
+        'sekolah' => Sekolah::first(),
+        'tglAwal' => $tglAwal,
+        'tglAkhir' => $tglAkhir,
+      ])->setPaper('F4', 'Potrait');
+      return $pdf->stream('REKAPITULASI ABSENSI - ' . $kelas->name . ' - PER 3 BULAN' .  '.pdf');
+    }
+
+    function persemester(Request $request, $role, $id) {
+      $bulanA = intval(Str::before($request->bulan, '-'));
+      $tglAwal = date('Y-m-01', strtotime( $request->year . '-' . $bulanA));
+      $tglAkhir = date('Y-m-d', strtotime('-1 day', strtotime('+6 month', strtotime($tglAwal))));
+      $kelas = Kelas::whereId($id)->first();
+      $pdf = PDF::loadview('pages.rekapabsensi.persemester.print',[
+        'kelas' => $kelas,
+        'siswa' => Siswa::where('kelas_id', $kelas->id)->get(),
+        'periode' => 'Satu Semester',
+        'sekolah' => Sekolah::first(),
+        'tglAwal' => $tglAwal,
+        'tglAkhir' => $tglAkhir,
+      ])->setPaper('F4', 'Potrait');
+      return $pdf->stream('REKAPITULASI ABSENSI -  ' . $kelas->name . ' - PER SEMESTER' . '.pdf');
+    }
+
+    function pertahun(Request $request, $role, $id) {
+
+      $tglAwal = intval($request->year) -1 . '-07-01';
+      $tglAkhir = $request->year . '-06-30';
+
+      $kelas = Kelas::whereId($id)->first();
+      $pdf = PDF::loadview('pages.rekapabsensi.pertahun.print',[
+        'kelas' => $kelas,
+        'siswa' => Siswa::where('kelas_id', $kelas->id)->get(),
+        'periode' => 'Satu Tahun Pelajaran',
+        'sekolah' => Sekolah::first(),
+        'tglAwal' => $tglAwal,
+        'tglAkhir' => $tglAkhir,
+      ])->setPaper('F4', 'Potrait');
+      return $pdf->stream('REKAPITULASI ABSENSI - ' . $kelas->name .  ' - PER TAHUN' . '.pdf');
+    }
+
+
 }

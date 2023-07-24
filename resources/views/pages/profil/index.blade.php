@@ -7,6 +7,7 @@
     $admin = Auth::user()->admin;
     $guru = Auth::user()->guru;
     $siswa = Auth::user()->siswa;
+    $piket = Auth::user()->piket;
 
     // $getUser = User::getUser()->name;
 
@@ -16,6 +17,8 @@
         $userLogin = $guru;
     } elseif ($siswa) {
         $userLogin = $siswa;
+    } elseif ($piket) {
+        $userLogin = $piket;
     }
 
     $role = auth()->user()->role;
@@ -31,7 +34,7 @@
           <div class="col-sm-6">
               <h4 class="fw-bold poppins m-0">Profil Saya</h4>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-6 mt-xs-2">
               @if (session()->has('success'))
                   <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
                       @include('_success')
@@ -81,6 +84,8 @@
                                             Administrator
                                         @elseif($guru)
                                             Guru
+                                        @elseif($piket)
+                                            Piket
                                         @elseif($siswa)
                                             Siswa - {{ $siswa->kelas->name }}
                                         @endif
@@ -117,6 +122,7 @@
                                         action="{{ route('profil.update', $userLogin->user_id) }}" method="post">
                                         @csrf
                                         @method('PUT')
+
                                         <div class="form-group row">
                                             <label for="inputName" class="col-sm-3 col-form-label">Nama</label>
                                             <div class="col-sm-9">
@@ -157,6 +163,7 @@
                                             </div>
                                         @endif
 
+                                        @if (Auth::user()->role != 'piket')
                                         <div class="form-group row">
                                             <label for="inputName" class="col-sm-3 col-form-label">Jenis Kelamin</label>
                                             <div class="col-sm-9">
@@ -174,6 +181,7 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        @endif
 
                                         @if ($role == 'admin' || $role == 'guru')
                                             <div class="form-group row">
@@ -201,6 +209,7 @@
                                             </div>
                                         @endif
 
+                                        @if (Auth::user()->role != 'piket')
                                             <div class="form-group row">
                                                 <label for="inputName" class="col-sm-3 col-form-label">Telepon</label>
                                                 <div class="col-sm-9">
@@ -225,6 +234,7 @@
                                                     @enderror
                                                 </div>
                                             </div>
+                                            @endif
 
                                         <input type="hidden" name="user_id" id=""
                                             value="{{ $user->id }}" hidden>

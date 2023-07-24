@@ -5,9 +5,9 @@
         <div class="container-fluid">
             <div class="row mb-0">
                 <div class="col-sm-6">
-                    <h4 class="fw-bold poppins m-0">Dashboard</h4>
+                    <h4 class="fw-bold poppins m-0 text-xs-center mt-xs-2">Dashboard</h4>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-6 mt-xs-2">
                     @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
                             @include('_success')
@@ -39,7 +39,7 @@
                         <div class="icon">
                           <i class="ion ion-person-stalker"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Lihat detail
+                        <a href="{{ route('datasiswa.index', $role) }}" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -56,7 +56,7 @@
                         <div class="icon">
                           <i class="ion ion-person-stalker"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Lihat detail
+                        <a href="{{ route('dataguru.index', $role) }}" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -70,7 +70,7 @@
                         <div class="icon">
                             <i class="ion ion-person"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Lihat detail
+                        <a href="{{ route('dataadmin.index', $role) }}" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -84,7 +84,7 @@
                         <div class="icon">
                           <i class="ion ion-log-in"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Lihat detail
+                        <a href="{{ route('datakelas.index', $role) }}" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -98,48 +98,12 @@
                         <div class="icon">
                           <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Lihat detail
-                            <i class="fas fa-arrow-circle-right"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-4 col-6">
-                    <div class="small-box bg-secondary">
-                        <div class="inner">
-                            <h3>{{ $mapel }}</h3>
-                            <p>Data Mata Pelajaran</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-eye"></i>
-                        </div>
-                        <a href="" class="small-box-footer">Lihat detail
+                        <a href="{{ route('datatapel.index', $role) }}" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>
                 </div>
                 @endcan
-
-
-                @if (auth()->user()->role == 'admin' || auth()->user()->role == 'guru')
-                <div class="col-md-3 col-sm-4 col-6">
-                    <div class="small-box bg-purple">
-                        <div class="inner">
-                            @if (Auth::user()->guru)
-                            <h3>{{ Auth::user()->guru->pembelajaran->count() }}</h3>
-                            @else
-                            <h3>{{ $pembelajaran }}</h3>
-                            @endif
-                            <p>Data Pembelajaran</p>
-                        </div>
-                        <div class="icon">
-                          <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">Lihat detail
-                            <i class="fas fa-arrow-circle-right"></i>
-                        </a>
-                    </div>
-                </div>
-                @endif
 
                 @can('siswa')
                 <div class="col-md-3 col-sm-4 col-6">
@@ -151,7 +115,39 @@
                         <div class="icon">
                             <i class="ion ion-file"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Lihat detail
+                        <a href="{{ route('absensi.show', [$role, Auth::user()->siswa->kelas_id]) }}" class="small-box-footer">Lihat detail
+                            <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                @endcan
+                @can('walikelas')
+                <div class="col-md-3 col-sm-4 col-6">
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>Absensi</h3>
+                            <p>Kehadiran Kelas Saya</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-file"></i>
+                        </div>
+                        <a href="{{ route('absensi.show', [$role, Auth::user()->guru->kelas->id]) }}" class="small-box-footer">Lihat detail
+                            <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                @endcan
+                @can('piket')
+                <div class="col-md-3 col-sm-4 col-6">
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>Absensi</h3>
+                            <p>Kehadiran</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-file"></i>
+                        </div>
+                        <a href="{{ route('absensi.index', $role) }}" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>
