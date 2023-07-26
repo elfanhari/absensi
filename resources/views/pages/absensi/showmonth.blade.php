@@ -131,6 +131,7 @@
                                     @else
                                       <th class="border-dark text-center" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="{{ Carbon::parse($date)->locale('id_ID')->isoFormat('dddd, D MMMM Y') }}">
+
                                         @php
                                             $dateString = $date;
                                             list($year, $month, $day) = explode('-', $dateString);

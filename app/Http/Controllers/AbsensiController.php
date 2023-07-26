@@ -139,7 +139,6 @@ class AbsensiController extends Controller
         $startDate->addDay();
       }
 
-
       if (Auth::user()->role == 'siswa') {
         $siswa = Siswa::where('user_id', Auth::user()->id)->get();
       } else {
