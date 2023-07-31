@@ -1,3 +1,8 @@
+@php
+    use App\Models\HariLibur;
+    use Carbon\Carbon;
+@endphp
+
 @extends('layouts.main')
 
 @section('content')
@@ -122,20 +127,58 @@
                 </div>
                 @endcan
                 @can('walikelas')
-                <div class="col-md-3 col-sm-4 col-6">
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                            <h3>Absensi</h3>
-                            <p>Kehadiran Kelas Saya</p>
+                  <div class="col-md-3 col-sm-4 col-6">
+                      <div class="small-box bg-success">
+                          <div class="inner">
+                              <h3>Absensi</h3>
+                              <p>Kehadiran Kelas Saya</p>
+                          </div>
+                          <div class="icon">
+                              <i class="ion ion-file"></i>
+                          </div>
+                          <a href="{{ route('absensi.show', [$role, Auth::user()->guru->kelas->id]) }}" class="small-box-footer">Lihat detail
+                              <i class="fas fa-arrow-circle-right"></i>
+                          </a>
+                      </div>
+                  </div>
+
+                @php
+
+                  $role = Auth::user()->role;
+                  $date = date('Y-m-d');
+                  $month = Carbon::now()->format('m');
+
+                  $dateString = $date;
+                  list($year, $month, $day) = explode('-', $dateString);
+                  $timestamp = mktime(0, 0, 0, $month, $day, $year);
+                  $timestamp = strtotime($dateString);
+
+                  $key = $timestamp . '_' . Str::random(10);
+
+                  $hariLibur = HariLibur::get()->pluck('tgl');
+                  $akhirPekan = Carbon::parse($date);
+
+                @endphp
+
+                  @if ($hariLibur->contains($date) || $akhirPekan->dayOfWeek === 0 || $akhirPekan->dayOfWeek == 6)
+                  {{-- NULL --}}
+                  @else
+                    <div class="col-md-3 col-sm-4 col-6">
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <h3>Input</h3>
+                                <p>Absen Hari Ini</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-file"></i>
+                            </div>
+                            <a href="{{ route('absensi.kelas.day.get', [Auth::user()->role,  Auth::user()->guru->kelas->id, $month, $date, $key]) }}" class="small-box-footer">Lihat detail
+                                <i class="fas fa-arrow-circle-right"></i>
+                            </a>
                         </div>
-                        <div class="icon">
-                            <i class="ion ion-file"></i>
-                        </div>
-                        <a href="{{ route('absensi.show', [$role, Auth::user()->guru->kelas->id]) }}" class="small-box-footer">Lihat detail
-                            <i class="fas fa-arrow-circle-right"></i>
-                        </a>
                     </div>
-                </div>
+                  @endif
+
                 @endcan
                 @can('piket')
                 <div class="col-md-3 col-sm-4 col-6">
