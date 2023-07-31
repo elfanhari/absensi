@@ -49,6 +49,8 @@ Route::group(['middleware' => ['auth']], function(){
   Route::get('/{role}/dashboard', DashboardController::class)->name('dashboard.index');
 
   Route::resource('/{role}/datasiswa', DataSiswaController::class);
+  Route::post('/siswa/import', [DataSiswaController::class, 'import'])->name('datasiswa.import');
+
   Route::resource('/{role}/dataguru', DataGuruController::class);
   Route::resource('/{role}/dataadmin', DataAdminController::class);
   Route::resource('/{role}/datakelas', DataKelasController::class);

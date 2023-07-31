@@ -102,16 +102,15 @@ class RekapAbsensiController extends Controller
         //
     }
 
-    function printRekapitulasi($role, $id) {
+    function printRekapitulasi($role, $id){
       $pembelajaran = Pembelajaran::whereId($id)->first();
-      $pdf = PDF::loadview('pages.rekapabsensi.print2', [
+      return view('pages.rekapabsensi.print2', [
         'pembelajaran' => $pembelajaran,
         'sekolah' => Sekolah::first(),
         'siswa' => Siswa::getSiswaAktifKelas($pembelajaran->kelas_id),
         'pertemuan' => Pertemuan::where('pembelajaran_id', $id)->orderBy('pertemuan_ke', 'ASC')->get(),
         'absen' => Absen::get(),
         'role' => auth()->user()->role,
-      ])->setPaper('F4', 'Potrait');
-      return $pdf->stream('REKAPITULASI ABSENSI -   ' . $pembelajaran->kelas->name . ' | ' . $pembelajaran->mapel->name .  '.pdf');
+      ]);
     }
 }

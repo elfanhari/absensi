@@ -12,7 +12,8 @@
             <div class="row mb-0">
                 <div class="col-sm-6">
                     <h4 class="fw-bold poppins m-0">
-                        <a href="{{ route('absensi.show', ['role' => auth()->user()->role, 'absensi' => $pertemuan->pembelajaran->id]) }}" class="btn btn-sm btn-link p-0 me-1" >
+                        <a href="{{ route('absensi.show', ['role' => auth()->user()->role, 'absensi' => $pertemuan->pembelajaran->id]) }}"
+                            class="btn btn-sm btn-link p-0 me-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
                                 class="bi fw-bold bi-arrow-left" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
@@ -23,18 +24,18 @@
                     </h4>
                 </div>
                 <div class="col-sm-6">
-                  @if (session()->has('success'))
-                    <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
-                        @include('_success')
-                        {!! session('success') !!}
-                    </div>
-                  @endif
-                  @if (session()->has('failed'))
-                    <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
-                        @include('_failed')
-                        {!! session('failed') !!}
-                    </div>
-                  @endif
+                    @if (session()->has('success'))
+                        <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
+                            @include('_success')
+                            {!! session('success') !!}
+                        </div>
+                    @endif
+                    @if (session()->has('failed'))
+                        <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+                            @include('_failed')
+                            {!! session('failed') !!}
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -48,60 +49,113 @@
                     <div class="card">
                         <div class="card-header">
 
-                          <div class="callout callout-warning my-1">
-                            <div class="row">
-                            <div class="col-md-6">
+                            <div class="callout callout-warning my-1">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-4 fw-bold">
+                                                Mata Pelajaran
+                                            </div>
+                                            <div class="col-md-8">
+                                                : {{ $pembelajaran->mapel->name }}
+                                            </div>
+                                            <div class="col-md-4 fw-bold">
+                                                Kelas
+                                            </div>
+                                            <div class="col-md-8">
+                                                : {{ $pembelajaran->kelas->name }}
+                                            </div>
+                                            <div class="col-md-4 fw-bold">
+                                                Guru Pengampu
+                                            </div>
+                                            <div class="col-md-8">
+                                                : {{ $pembelajaran->guru->name }}
+                                            </div>
+                                            <div class="col-md-4 fw-bold">
+                                                Tahun Pelajaran
+                                            </div>
+                                            <div class="col-md-8">
+                                                : {{ $pembelajaran->kelas->tapel->tahun_pelajaran }} - Semester
+                                                {{ $pembelajaran->kelas->tapel->semester }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-4 fw-bold">
+                                                Pertemuan Ke:
+                                            </div>
+                                            <div class="col-8">
+                                                : {{ $pertemuan->pertemuan_ke }}
+                                            </div>
+                                            <div class="col-4 fw-bold">
+                                                Hari, Tanggal
+                                            </div>
+                                            <div class="col-8">
+                                                :
+                                                {{ Carbon::parse($pertemuan->tanggal)->locale('id_ID')->isoFormat('dddd, D MMMM Y') }}
+                                            </div>
+                                            <div class="col-4 fw-bold">
+                                                Pukul
+                                            </div>
+                                            <div class="col-8">
+                                                : {{ Carbon::parse($pertemuan->dari_pukul)->format('H:i') }} s/d
+                                                {{ Carbon::parse($pertemuan->sampai_pukul)->format('H:i') }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- <div class="callout callout-warning my-1">
                               <div class="row">
-                              <div class="col-md-4 fw-bold">
-                                Mata Pelajaran
+                                  <div class="col">
+                                      <div class="row">
+                                        <div class="table-responsive">
+                                          <table class="table-borderless">
+                                            <tr>
+                                              <td class="fw-bold">Kelas</td>
+                                              <td style="width: 1px" class="px-2">:</td>
+                                              <td>{{ $pembelajaran->kelas->name }}</td>
+                                            </tr>
+                                            <tr>
+                                              <td class="fw-bold">Mata Pelajaran</td>
+                                              <td style="width: 1px" class="px-2">:</td>
+                                              <td>{{ $pembelajaran->mapel->name }}</td>
+                                            </tr>
+                                            <tr>
+                                              <td class="fw-bold">Guru Pengampu</td>
+                                              <td style="width: 1px" class="px-2">:</td>
+                                              <td>{{ $pembelajaran->guru->name }}</td>
+                                            </tr>
+                                            <tr>
+                                              <td class="fw-bold">Tahun Pelajaran</td>
+                                              <td style="width: 1px" class="px-2">:</td>
+                                              <td>{{  $pembelajaran->kelas->tapel->tahun_pelajaran  }} - Semester {{ $pembelajaran->kelas->tapel->semester }}</td>
+                                            </tr>
+                                            <tr>
+                                              <td class="fw-bold">Pertemuan Ke</td>
+                                              <td style="width: 1px" class="px-2">:</td>
+                                              <td> {{ $pertemuan->pertemuan_ke }}</td>
+                                            </tr>
+                                            <tr>
+                                              <td class="fw-bold">Hari, Tanggal</td>
+                                              <td style="width: 1px" class="px-2">:</td>
+                                              <td> {{ Carbon::parse($pertemuan->tanggal)->locale('id_ID')->isoFormat('dddd, D MMMM Y') }}</td>
+                                            </tr>
+                                            <tr>
+                                              <td class="fw-bold">Pukul</td>
+                                              <td style="width: 1px" class="px-2">:</td>
+                                              <td>{{ Carbon::parse($pertemuan->dari_pukul)->format('H:i') }} s/d
+                                                {{ Carbon::parse($pertemuan->sampai_pukul)->format('H:i') }}</td>
+                                            </tr>
+                                          </table>
+                                        </div>
+
+                                      </div>
+                                  </div>
                               </div>
-                              <div class="col-md-8">
-                                : {{ $pembelajaran->mapel->name }}
-                              </div>
-                              <div class="col-md-4 fw-bold">
-                                Kelas
-                              </div>
-                              <div class="col-md-8">
-                               :  {{ $pembelajaran->kelas->name }}
-                              </div>
-                              <div class="col-md-4 fw-bold">
-                                Guru Pengampu
-                              </div>
-                              <div class="col-md-8">
-                               :  {{ $pembelajaran->guru->name }}
-                              </div>
-                              <div class="col-md-4 fw-bold">
-                                Tahun Pelajaran
-                              </div>
-                              <div class="col-md-8">
-                               :  {{ $pembelajaran->kelas->tapel->tahun_pelajaran }} - Semester {{ $pembelajaran->kelas->tapel->semester }}
-                              </div>
-                            </div>
-                            </div>
-                            <div class="col-md-6">
-                              <div class="row">
-                              <div class="col-4 fw-bold">
-                                Pertemuan Ke:
-                              </div>
-                              <div class="col-8">
-                                : {{ $pertemuan->pertemuan_ke }}
-                              </div>
-                              <div class="col-4 fw-bold">
-                                Hari, Tanggal
-                              </div>
-                              <div class="col-8">
-                                : {{ Carbon::parse($pertemuan->tanggal)->locale('id_ID')->isoFormat('dddd, D MMMM Y') }}
-                              </div>
-                              <div class="col-4 fw-bold">
-                                Pukul
-                              </div>
-                              <div class="col-8">
-                               :  {{ Carbon::parse($pertemuan->dari_pukul)->format('H:i') }} s/d {{ Carbon::parse($pertemuan->sampai_pukul)->format('H:i') }}
-                              </div>
-                            </div>
-                          </div>
-                          </div>
-                          </div>
+                          </div> --}}
 
                         </div>
 
@@ -111,60 +165,74 @@
                                 Belum ada Siswa di Kelas Ini!
                             @else
                                 <div class="table-responsive">
-                                  <form action="{{ route('kelolaabsensi.update', ['id' => $pertemuan->id, 'role' => auth()->user()->role]) }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <table id="" class="table table-sm table-striped table-hover table-bordered border-dark">
-                                        <thead>
-                                            <tr class="bg-dark text-white">
-                                                <th scope="col" rowspan="2"
-                                                    class="border-dark text-center align-middle bg-info">#</th>
-                                                <th scope="col" rowspan="2"
-                                                    class="border-dark text-center align-middle bg-info">NIS</th>
-                                                <th scope="col" rowspan="2"
-                                                    class="border-dark text-center align-middle bg-info">Nama Siswa</th>
-                                                <th scope="col" rowspan="2"
-                                                    class="border-dark text-center align-middle bg-info">L/P</th>
-                                                <th scope="col" rowspan="2"
-                                                    class="border-dark text-center align-middle bg-info">Keterangan</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                          @foreach ($siswa as $index => $item)
-                                            <tr>
-                                              <td class="border-dark">{{ $loop->iteration }}</td>
-                                              <td class="border-dark">{{ $item->nis }}</td>
-                                              <td class="border-dark text-uppercase">
-                                                <input type="hidden" name="siswa_id[]" value="{{ $item->id }}">
-                                                {{ $item->name }}
-                                              </td>
-                                              <td class="border-dark text-uppercase">
-                                                {{ $item->jk }}
-                                              </td>
-                                              <td class="border-dark">
-                                                <select name="keterangan[]" id="" class="form-control form-select">
-                                                  <option value="H" @if($absen->where('siswa_id', $item->id)->first()) {{ $absen->where('siswa_id', $item->id)->first()->keterangan == 'H' ? 'selected' : '' }} @endif>Hadir</option>
-                                                  <option value="S" @if($absen->where('siswa_id', $item->id)->first()) {{ $absen->where('siswa_id', $item->id)->first()->keterangan == 'S' ? 'selected' : '' }} @endif>Sakit</option>
-                                                  <option value="I" @if($absen->where('siswa_id', $item->id)->first()) {{ $absen->where('siswa_id', $item->id)->first()->keterangan == 'I' ? 'selected' : '' }} @endif>Izin</option>
-                                                  <option value="A" @if($absen->where('siswa_id', $item->id)->first()) {{ $absen->where('siswa_id', $item->id)->first()->keterangan == 'A' ? 'selected' : '' }} @endif>Alpa</option>
-                                                  <option value="T" @if($absen->where('siswa_id', $item->id)->first()) {{ $absen->where('siswa_id', $item->id)->first()->keterangan == 'T' ? 'selected' : '' }} @endif>Terlambat</option>
-                                                </select>
-                                              </td>
-                                            </tr>
-
-                                          @endforeach
-                                        </tbody>
-                                    </table>
-                                    <button type="submit" class="btn btn-success float-right">
-                                      Simpan
-                                  </button>
-                                  <div class="checkbox float-right me-3">
-                                      <label>
-                                          <input type="checkbox" class="mt-3" required>
-                                          Saya yakin akan mengubah data tersebut
-                                      </label>
-                                  </div>
-                                  </form>
+                                    <form
+                                        action="{{ route('kelolaabsensi.update', ['id' => $pertemuan->id, 'role' => auth()->user()->role]) }}"
+                                        method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <table id=""
+                                            class="table table-sm table-striped table-hover table-bordered border-dark">
+                                            <thead>
+                                                <tr class="bg-dark text-white">
+                                                    <th scope="col" rowspan="2"
+                                                        class="border-dark text-center align-middle bg-info">#</th>
+                                                    <th scope="col" rowspan="2"
+                                                        class="border-dark text-center align-middle bg-info">NIS</th>
+                                                    <th scope="col" rowspan="2"
+                                                        class="border-dark text-center align-middle bg-info">Nama Siswa</th>
+                                                    <th scope="col" rowspan="2"
+                                                        class="border-dark text-center align-middle bg-info">L/P</th>
+                                                    <th scope="col" rowspan="2"
+                                                        class="border-dark text-center align-middle bg-info">Keterangan</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($siswa as $index => $item)
+                                                    <tr>
+                                                        <td class="border-dark">{{ $loop->iteration }}</td>
+                                                        <td class="border-dark">{{ $item->nis }}</td>
+                                                        <td class="border-dark text-uppercase">
+                                                            <input type="hidden" name="siswa_id[]"
+                                                                value="{{ $item->id }}">
+                                                            {{ $item->name }}
+                                                        </td>
+                                                        <td class="border-dark text-uppercase">
+                                                            {{ $item->jk }}
+                                                        </td>
+                                                        <td class="border-dark">
+                                                            <select name="keterangan[]" id=""
+                                                                class="form-control form-select">
+                                                                <option value="H"
+                                                                    @if ($absen->where('siswa_id', $item->id)->first()) {{ $absen->where('siswa_id', $item->id)->first()->keterangan == 'H' ? 'selected' : '' }} @endif>
+                                                                    Hadir</option>
+                                                                <option value="S"
+                                                                    @if ($absen->where('siswa_id', $item->id)->first()) {{ $absen->where('siswa_id', $item->id)->first()->keterangan == 'S' ? 'selected' : '' }} @endif>
+                                                                    Sakit</option>
+                                                                <option value="I"
+                                                                    @if ($absen->where('siswa_id', $item->id)->first()) {{ $absen->where('siswa_id', $item->id)->first()->keterangan == 'I' ? 'selected' : '' }} @endif>
+                                                                    Izin</option>
+                                                                <option value="A"
+                                                                    @if ($absen->where('siswa_id', $item->id)->first()) {{ $absen->where('siswa_id', $item->id)->first()->keterangan == 'A' ? 'selected' : '' }} @endif>
+                                                                    Alpa</option>
+                                                                <option value="T"
+                                                                    @if ($absen->where('siswa_id', $item->id)->first()) {{ $absen->where('siswa_id', $item->id)->first()->keterangan == 'T' ? 'selected' : '' }} @endif>
+                                                                    Terlambat</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        <button type="submit" class="btn btn-success float-right">
+                                            Simpan
+                                        </button>
+                                        <div class="checkbox float-right me-3">
+                                            <label>
+                                                <input type="checkbox" class="mt-3" required>
+                                                Saya yakin akan mengubah data tersebut
+                                            </label>
+                                        </div>
+                                    </form>
                                 </div>
                             @endif
                         </div>
@@ -176,6 +244,6 @@
         </div>
     </section>
 
-</div>
+    </div>
 
 @endsection

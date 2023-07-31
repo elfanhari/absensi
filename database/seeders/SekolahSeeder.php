@@ -16,16 +16,16 @@ class SekolahSeeder extends Seeder
     {
       collect([
         [
-          'name' => 'MTs Rekayasa',
-          'npsn' => '69354090',
-          'nss' => '12345678',
-          'telepon' => '02652701285',
-          'email' => 'mts-rekayasa@gmail.com',
-          'alamat' => 'Jl. Raya Indonesia, Banjar',
+          'name' => 'MTsN 27 Jakarta',
+          'npsn' => '10900867',
+          // 'nss' => '',
+          'telepon' => '081234567890',
+          'email' => 'mtsn27jakarta@gmail.com',
+          'alamat' => 'Jl. Raya Jakarta',
           'kodepos' => '46385',
-          'website' => 'www.mts-rekayasa.sch.id',
-          'kepsek' => 'Deni Ramdani, M.M',
-          'nipkepsek' => '197607092004015009',
+          'website' => 'mtsn27-jakbar.sch.id',
+          'kepsek' => 'Siti Awaliyah, S. Pd',
+          'nipkepsek' => '19800202 200604 1 008',
         ],
       ])->each(function($sekolah){
         Sekolah::create($sekolah);

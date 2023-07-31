@@ -10,6 +10,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Imports\SiswaImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DataSiswaController extends Controller
 {
@@ -129,7 +131,7 @@ class DataSiswaController extends Controller
         $dataUser = [
           'username' => $request->username,
           'is_aktif' => $request->is_aktif,
-          'password' => $request->password,
+          'password' => bcrypt($request->password),
         ];
       } else {
         $dataUser = [
@@ -154,5 +156,21 @@ class DataSiswaController extends Controller
     $siswa = Siswa::find($id);
     User::where('id', $siswa->user_id)->delete();
     return redirect(route('datasiswa.index', ['datasiswa' => $id, 'role' => $role]))->withSuccess('Data Siswa: <b>' . Str::before($siswa->name, ' ') . '</b> berhasil dihapus!');
+  }
+
+  public function import(Request $request)
+  {
+    $request->validate([
+      'file' => ['required', 'file', 'distinct']
+    ]);
+
+    $file = $request->file('file');
+    if ($file->getClientOriginalExtension() != 'xlsx') {
+        return back()->withFailed('Import Gagal! File yang anda masukkan tidak sesuai ketentuan!');
+    }
+
+    Excel::import(new SiswaImport, request()->file('file'));
+    return back()->with('success', 'Data siswa berhasil diimport!');
+
   }
 }

@@ -108,5 +108,22 @@ class GuruSeeder extends Seeder
       ])->each(function($guru){
         Guru::create($guru);
       });
+
+      // collect([
+      //   [
+      //     [
+      //       'user_id' => 2,
+      //       'name' => 'Budi Santoso, S.Pd',
+      //       'nip' => '768429153625071928',
+      //       'nuptk' => '5418907265389742',
+      //       'jk' => 'L',
+      //       'telepon' => '08231312123',
+      //       'alamat' => 'Langensari, Banjar',
+      //     ],
+      //   ],
+      // ])->each(function($guru){
+      //   Guru::create($guru);
+      // });
+
     }
 }

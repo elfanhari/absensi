@@ -162,5 +162,28 @@ class UserSeeder extends Seeder
       ])->each(function($user){
         User::create($user);
       });
+
+      // collect([
+      //     [ //1
+      //       'username' => 'erikadmin',
+      //       'email' => 'erikadmin@gmail.com',
+      //       'role' => 'admin',
+      //       'password' => bcrypt('password'),
+      //     ],
+      //     [ //2
+      //       'username' => 'budiguru',
+      //       'email' => 'budiguru@gmail.com',
+      //       'role' => 'guru',
+      //       'password' => bcrypt('password'),
+      //     ],
+      //     [ //3
+      //       'username' => 'elfansiswa',
+      //       'email' => 'elfansiswa@gmail.com',
+      //       'role' => 'siswa',
+      //       'password' => bcrypt('password'),
+      //     ],
+      // ])->each(function($user){
+      //   User::create($user);
+      // });
     }
 }

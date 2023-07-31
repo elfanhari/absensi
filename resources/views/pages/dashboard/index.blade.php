@@ -39,7 +39,7 @@
                         <div class="icon">
                           <i class="ion ion-person-stalker"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Lihat detail
+                        <a href="{{ route('datasiswa.index', $role) }}" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -56,7 +56,7 @@
                         <div class="icon">
                           <i class="ion ion-person-stalker"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Lihat detail
+                        <a href="{{ route('dataguru.index', $role) }}" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -70,7 +70,7 @@
                         <div class="icon">
                             <i class="ion ion-person"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Lihat detail
+                        <a href="{{ route('dataadmin.index', $role) }}" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -84,7 +84,7 @@
                         <div class="icon">
                           <i class="ion ion-log-in"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Lihat detail
+                        <a href="{{ route('datakelas.index', $role) }}" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -98,7 +98,7 @@
                         <div class="icon">
                           <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Lihat detail
+                        <a href="{{ route('datatapel.index', $role) }}" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -112,33 +112,45 @@
                         <div class="icon">
                             <i class="ion ion-eye"></i>
                         </div>
-                        <a href="" class="small-box-footer">Lihat detail
+                        <a href="{{ route('datamapel.index', $role) }}" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>
                 </div>
                 @endcan
 
-
                 @if (auth()->user()->role == 'admin' || auth()->user()->role == 'guru')
-                <div class="col-md-3 col-sm-4 col-6">
-                    <div class="small-box bg-purple">
-                        <div class="inner">
-                            @if (Auth::user()->guru)
-                            <h3>{{ Auth::user()->guru->pembelajaran->count() }}</h3>
-                            @else
-                            <h3>{{ $pembelajaran }}</h3>
-                            @endif
-                            <p>Data Pembelajaran</p>
+
+                    <div class="col-md-3 col-sm-4 col-6">
+                      <div class="small-box bg-purple">
+                          @can('admin')
+                            <div class="inner">
+                              <h3>{{ $pembelajaran }}</h3>
+                              <p>Data Pembelajaran</p>
+                            </div>
+                          @endcan
+                          @can('gurumapel')
+                            <div class="inner">
+                              <h3>{{ Auth::user()->guru->pembelajaran->count() }}</h3>
+                              <p>Data Pembelajaran</p>
+                            </div>
+                          @endcan
+                              <div class="icon">
+                                <i class="ion ion-pie-graph"></i>
+                              </div>
+                              @can('gurumapel')
+                                <a href="{{ route('absensi.index', $role) }}" class="small-box-footer">Lihat detail
+                                  <i class="fas fa-arrow-circle-right"></i>
+                                </a>
+                              @endcan
+                              @can('admin')
+                                <a href="{{ route('datapembelajaran.index', $role) }}" class="small-box-footer">Lihat detail
+                                  <i class="fas fa-arrow-circle-right"></i>
+                                </a>
+                              @endcan
                         </div>
-                        <div class="icon">
-                          <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">Lihat detail
-                            <i class="fas fa-arrow-circle-right"></i>
-                        </a>
                     </div>
-                </div>
+
                 @endif
 
                 @can('siswa')
@@ -151,7 +163,7 @@
                         <div class="icon">
                             <i class="ion ion-file"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Lihat detail
+                        <a href="{{ route('absensi.index', $role) }}" class="small-box-footer">Lihat detail
                             <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>

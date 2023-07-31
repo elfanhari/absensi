@@ -10,6 +10,7 @@ use App\Models\Pembelajaran;
 use App\Models\Siswa;
 use App\Models\Tapel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -29,6 +30,7 @@ class DashboardController extends Controller
           'tapel' => Tapel::get()->count(),
           'mapel' => Mapel::get()->count(),
           'pembelajaran' => Pembelajaran::get()->count(),
+          'role' => Auth::user()->role,
         ]);
     }
 }

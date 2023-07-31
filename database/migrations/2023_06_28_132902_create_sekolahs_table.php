@@ -24,7 +24,7 @@ class CreateSekolahsTable extends Migration
             $table->bigInteger('kodepos');
             $table->string('website')->nullable();
             $table->string('kepsek');
-            $table->bigInteger('nipkepsek');
+            $table->string('nipkepsek');
             $table->text('logo')->nullable()->default('logo.png');
             $table->timestamps();
         });

@@ -138,5 +138,22 @@ class SiswaSeeder extends Seeder
       ])->each(function($siswa){
         Siswa::create($siswa);
       });
+
+      // collect([
+      //   [
+      //     [
+      //       'user_id' => 3,
+      //       'kelas_id' => 1,
+      //       'name' => 'Elfan Hari Saputra',
+      //       'jk' => 'L',
+      //       'nis' => '024342412',
+      //       'nisn' => '3035423424',
+      //       'alamat' => 'Lakbok',
+      //       'telepon' => '081234567890',
+      //     ],
+      //   ],
+      // ])->each(function($siswa){
+      //   Siswa::create($siswa);
+      // });
     }
 }

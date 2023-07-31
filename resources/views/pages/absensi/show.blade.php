@@ -75,34 +75,38 @@
                         <div class="card-header">
 
                             <div class="callout callout-warning my-1">
-                                <div class="row col-6">
-                                    <div class="col-md-4 fw-bold">
-                                        Mata Pelajaran
-                                    </div>
-                                    <div class="col-md-8">
-                                        : {{ $pembelajaran->mapel->name }}
-                                    </div>
-                                    <div class="col-md-4 fw-bold">
-                                        Kelas
-                                    </div>
-                                    <div class="col-md-8">
-                                        : {{ $pembelajaran->kelas->name }}
-                                    </div>
-                                    <div class="col-md-4 fw-bold">
-                                        Guru Pengampu
-                                    </div>
-                                    <div class="col-md-8">
-                                        : {{ $pembelajaran->guru->name }}
-                                    </div>
-                                    <div class="col-md-4 fw-bold">
-                                        Tahun Pelajaran
-                                    </div>
-                                    <div class="col-md-8">
-                                        : {{ $pembelajaran->kelas->tapel->tahun_pelajaran }} - Semester
-                                        {{ $pembelajaran->kelas->tapel->semester }}
-                                    </div>
-                                </div>
-                            </div>
+                              <div class="row">
+                                  <div class="col">
+                                      <div class="row">
+                                        <div class="table-responsive">
+                                          <table class="table-borderless">
+                                            <tr>
+                                              <td class="fw-bold">Kelas</td>
+                                              <td style="width: 1px" class="px-2">:</td>
+                                              <td>{{ $pembelajaran->kelas->name }}</td>
+                                            </tr>
+                                            <tr>
+                                              <td class="fw-bold">Mata Pelajaran</td>
+                                              <td style="width: 1px" class="px-2">:</td>
+                                              <td>{{ $pembelajaran->mapel->name }}</td>
+                                            </tr>
+                                            <tr>
+                                              <td class="fw-bold">Guru Pengampu</td>
+                                              <td style="width: 1px" class="px-2">:</td>
+                                              <td>{{ $pembelajaran->guru->name }}</td>
+                                            </tr>
+                                            <tr>
+                                              <td class="fw-bold">Tahun Pelajaran</td>
+                                              <td style="width: 1px" class="px-2">:</td>
+                                              <td>{{  $pembelajaran->kelas->tapel->tahun_pelajaran  }} - Semester {{ $pembelajaran->kelas->tapel->semester }}</td>
+                                            </tr>
+                                          </table>
+                                        </div>
+
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
 
                         </div>
 

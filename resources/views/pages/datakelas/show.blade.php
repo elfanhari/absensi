@@ -19,19 +19,26 @@
                                 d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
                         </svg>
                     </button>
-                    Siswa Kelas: {{ $kelas->name }}
+                    Siswa Kelas: {{ $kelas->name }} (ID = {{ $kelas->id }})
                 </h4>
             </div>
         </div>
 
             <div class="row">
                 <div class="col-md-6 offset-md-6">
-                    @if (session()->has('info'))
+                    @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             @include('_success')
-                            {!! session('info') !!}
+                            {!! session('success') !!}
                         </div>
                     @endif
+                    @if (session()->has('failed'))
+                      <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+                          @include('_failed')
+                          {!! session('failed') !!}
+                      </div>
+                    @endif
+
                 </div>
             </div>
 
@@ -61,6 +68,14 @@
                                 <span class="text">Siswa</span>
                               </a>
 
+                              <button class="btn btn-warning btn-sm float-end" data-bs-toggle="modal" data-bs-target="#importSiswa">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload me-1" viewBox="0 0 16 16">
+                                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                  <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                                </svg>
+                                Import Data Siswa
+                              </button>
+
                             {{-- <h3 class="card-title">DataTable with default features</h3> --}}
                             {{-- <button class="btn btn-warning btn-sm float-right d-inline" data-bs-toggle="modal"
                                 data-bs-target="#importData">
@@ -78,7 +93,8 @@
                                             <tr class="bg-dark text-white">
                                                 <th scope="col">#</th>
                                                 <th scope="col">Nama</th>
-                                                <th scope="col">Kelas</th>
+                                                {{-- <th scope="col">Kelas</th> --}}
+                                                {{-- <th scope="col">ID Kelas</th> --}}
                                                 <th scope="col">NIS</th>
                                                 <th scope="col">NISN</th>
                                                 <th scope="col">Jenis Kelamin</th>
@@ -92,7 +108,8 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $item->name }}</td>
-                                                    <td>{{ $item->kelas->name }}</td>
+                                                    {{-- <td>{{ $item->kelas->name }}</td> --}}
+                                                    {{-- <td>{{ $kelas->id }}</td> --}}
                                                     <td>{{ $item->nis }}</td>
                                                     <td>{{ $item->nisn }}</td>
                                                     <td>{{ $item->jk == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
@@ -248,11 +265,9 @@
                                                                                     <td class="fw-bold">Status Siswa</td>
                                                                                     <td style="width: 1px;">:</td>
                                                                                     <td>
-                                                                                      @if ($item->status == '1')
+                                                                                      @if ($item->user->is_aktif == '1')
                                                                                         <span class="badge px-1 bg-success">AKTIF</span>
-                                                                                        @elseif ($item->status == '2')
-                                                                                        <span class="badge px-1 bg-info">LULUS</span>
-                                                                                        @else
+                                                                                      @else
                                                                                         <span class="badge px-1 bg-info">NON-AKTIF</span>
                                                                                       @endif
                                                                                     </td>
@@ -301,5 +316,38 @@
 
         </div>
     </section>
+
+   {{-- Modal Import Data --}}
+   <div class="modal fade" id="importSiswa" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+
+        <form action="{{ route('datasiswa.import') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title poppins fw-semibold" id="exampleModalLabel">Import Data Siswa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        <strong>Penting!</strong> File yang diunggah harus berupa dokumen Microsoft Excel dengan ekstensi
+                        .xlsx
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="file" name="file" class="form-control" id="inputGroupFile01" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+  </div>
 
 @endsection

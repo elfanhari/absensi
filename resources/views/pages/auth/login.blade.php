@@ -20,7 +20,7 @@
 
     <div class="mx-auto mb-4 d-block justify-content-center text-center">
         <small class="h5 text-bold">Absensi</small>
-        <p class="h3">Mts Rekayasa</p>
+        <p class="h3">MA Sumber Payung</p>
     </div>
 
     <div class="login-box mt-2">

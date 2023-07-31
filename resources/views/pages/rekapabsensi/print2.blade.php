@@ -32,7 +32,7 @@
 
 </head>
 
-<body style="font-family: 'Figtree';">
+<body style="font-family: 'Times New Roman';">
 
     <div>
 
@@ -88,23 +88,23 @@
 
                                     </th>
                                 @endforeach
-                                <th class="bg-success border-dark align-middle text-center" data-bs-toggle="tooltip"
+                                <th class="bg-success border-dark align-middle" style="text-align: center" data-bs-toggle="tooltip"
                                     data-bs-placement="top" title="Hadir">
                                     H
                                 </th>
-                                <th class="bg-primary border-dark align-middle text-center" data-bs-toggle="tooltip"
+                                <th class="bg-primary border-dark align-middle" style="text-align: center" data-bs-toggle="tooltip"
                                     data-bs-placement="top" title="Sakit">
                                     S
                                 </th>
-                                <th class="bg-purple border-dark align-middle text-center" data-bs-toggle="tooltip"
+                                <th class="bg-purple border-dark align-middle" style="text-align: center" data-bs-toggle="tooltip"
                                     data-bs-placement="top" title="Izin">
                                     I
                                 </th>
-                                <th class="bg-danger border-dark align-middle text-center" data-bs-toggle="tooltip"
+                                <th class="bg-danger border-dark align-middle" style="text-align: center" data-bs-toggle="tooltip"
                                     data-bs-placement="top" title="Alpa">
                                     A
                                 </th>
-                                <th class="bg-warning border-dark align-middle text-center" data-bs-toggle="tooltip"
+                                <th class="bg-warning border-dark align-middle" style="text-align: center" data-bs-toggle="tooltip"
                                     data-bs-placement="top" title="Terlambat">
                                     T
                                 </th>
@@ -116,14 +116,14 @@
                             <tr>
                                 <td class="border-dark">{{ $loop->iteration }}</td>
                                 <td class="border-dark">{{ $item->nis }}</td>
-                                <td class="border-dark text-uppercase">{{ $item->name }}</td>
-                                <td class="border-dark">{{ $item->jk }}</td>
+                                <td class="border-dark text-uppercase" style="min-width: 200px">{{ $item->name }}</td>
+                                <td class="border-dark" style="text-align: center">{{ $item->jk }}</td>
 
                                 @if ($pertemuan->count() >= 1)
                                     @foreach ($pertemuan as $pert)
-                                        <td class="border-dark">
+                                        <td class="border-dark" style="text-align: center">
                                             @if ($item->absen->where('siswa_id', $item->id)->where('pertemuan_id', $pert->id)->count() < 1)
-                                                <span class="badge bg-secondary px-2">Belum <br> Diinput</span>
+                                                <span class="badge bg-secondary px-2"><small> <i> ? </i> </small></span>
                                             @else
                                                 @if ($item->absen->where('siswa_id', $item->id)->where('pertemuan_id', $pert->id)->first()->keterangan == 'H')
                                                     <span class="badge bg-success">
@@ -176,6 +176,10 @@
             </div>
 
         </div>
+
+<script>
+  window.print()
+</script>
 
 </body>
 

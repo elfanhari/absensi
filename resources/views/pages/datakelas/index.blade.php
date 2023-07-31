@@ -16,6 +16,7 @@
                         {!! session('success') !!}
                     </div>
                 @endif
+
             </div>
           </div>
 
@@ -58,6 +59,7 @@
                                       <tr class="bg-dark text-white">
                                           <th scope="col">#</th>
                                           <th scope="col">Nama Kelas</th>
+                                          <th scope="col">ID KELAS</th>
                                           <th scope="col">Wali Kelas</th>
                                           <th scope="col">Tahun Pelajaran</th>
                                           <th scope="col">Aksi</th>
@@ -66,8 +68,9 @@
                                   <tbody>
                                       @foreach ($kelas as $item)
                                           <tr>
-                                              <td>{{ $loop->iteration }}</td>
-                                              <td>{{ $item->name }}</td>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $item->name }}</td>
+                                            <td>{{ $item->id }}</td>
                                               <td>{{ $item->guru->name }}{{ $item->guru->gelar ? ', ' . $item->guru->gelar : '' }}</td>
                                               <td>{{ $item->tapel->tahun_pelajaran }} - Semester {{ $item->tapel->semester }}</td>
                                               <td>

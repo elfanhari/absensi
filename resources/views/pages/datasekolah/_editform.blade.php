@@ -102,7 +102,7 @@
     <div class="form-group row">
       <label for="nipkepsek" class="col-sm-4 col-form-label">NIP Kepala Sekolah</label>
       <div class="col-sm-8">
-        <input type="number" value="{{ old('nipkepsek', $sekolah->nipkepsek) }}" class="form-control @error('nipkepsek') is-invalid @enderror " name="nipkepsek" id="nipkepsek" placeholder="Masukkan nipkepsek">
+        <input type="text" value="{{ old('nipkepsek', $sekolah->nipkepsek) }}" class="form-control @error('nipkepsek') is-invalid @enderror " name="nipkepsek" id="nipkepsek" placeholder="Masukkan nipkepsek">
         @error('nipkepsek')
         <span class="invalid-feedback mt-1">
           {{ $message }}
