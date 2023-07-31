@@ -20,7 +20,7 @@
 
     <div class="mx-auto mb-4 d-block justify-content-center text-center">
         <small class="h5 text-bold">Absensi</small>
-        <p class="h3">SMKN 54 JAKARTA</p>
+        <p class="h3">MTsN 27 JAKARTA</p>
     </div>
 
     <div class="login-box mt-2">

@@ -56,7 +56,6 @@
                                           <th scope="col">#</th>
                                           <th scope="col">ID KELAS</th>
                                           <th scope="col">Nama Kelas</th>
-                                          <th scope="col">Jurusan</th>
                                           <th scope="col">Wali Kelas</th>
                                           <th scope="col">Tahun Pelajaran</th>
                                           <th scope="col"  class="aksi-large">Aksi</th>
@@ -68,7 +67,6 @@
                                               <td>{{ $loop->iteration }}</td>
                                               <td>{{ $item->id }}</td>
                                               <td>{{ $item->name }}</td>
-                                              <td>{{ $item->jurusan->singkatan }}</td>
                                               <td>{{ $item->guru->name }}{{ $item->guru->gelar ? ', ' . $item->guru->gelar : '' }}</td>
                                               <td>{{ $item->tapel->tahun_pelajaran }} - Semester {{ $item->tapel->semester }}</td>
                                               <td>

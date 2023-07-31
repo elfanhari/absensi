@@ -18,15 +18,15 @@ class SiswaImport implements ToModel, WithStartRow
     */
     public function model(array $row)
     {
-      $existingUser = User::where('username', $row[0])->first();
-      if ($existingUser) {
-          return back()->withFailed('Gagal!');
-      }
+      // $existingUser = User::where('username', $row[0])->first();
+      // if ($existingUser) {
+      //     return back()->withFailed('Gagal!');
+      // }
 
-      $existingEmail = User::where('email', $row[1])->first();
-      if ($existingEmail) {
-        return back()->withFailed('Gagal!');
-      }
+      // $existingEmail = User::where('email', $row[1])->first();
+      // if ($existingEmail) {
+      //   return back()->withFailed('Gagal!');
+      // }
 
       $user = User::create([
         'username' => $row[8],
@@ -34,6 +34,8 @@ class SiswaImport implements ToModel, WithStartRow
         'role' => 'siswa', // Anda bisa mengganti role sesuai kebutuhan
         'password' => bcrypt($row[9]), // Anda bisa mengubah cara enkripsi password sesuai konfigurasi
       ]);
+
+      $user;
 
       // Menyimpan data ke dalam tabel siswas
       $siswa = new Siswa([

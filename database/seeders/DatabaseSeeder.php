@@ -36,7 +36,6 @@ class DatabaseSeeder extends Seeder
           GuruSeeder2::class,
           PiketSeeder2::class,
           TapelSeeder2::class,
-          JurusanSeeder2::class,
           KelasSeeder2::class,
           SiswaSeeder2::class,
           SekolahSeeder::class,

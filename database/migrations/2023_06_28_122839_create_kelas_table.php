@@ -16,7 +16,6 @@ class CreateKelasTable extends Migration
     {
         Schema::create('kelas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('jurusan_id');
             $table->unsignedBigInteger('tapel_id');
             $table->unsignedBigInteger('guru_id');
             $table->bigInteger('tingkat');
@@ -24,7 +23,6 @@ class CreateKelasTable extends Migration
             $table->timestamps();
 
             // FK
-            $table->foreign('jurusan_id')->references('id')->on('jurusans')->onDelete('cascade');
             $table->foreign('tapel_id')->references('id')->on('tapels')->onDelete('cascade');
             $table->foreign('guru_id')->references('id')->on('gurus')->onDelete('cascade');
 

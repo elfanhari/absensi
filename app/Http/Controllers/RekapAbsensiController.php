@@ -183,7 +183,8 @@ class RekapAbsensiController extends Controller
       $tglAkhir = $request->year . '-06-30';
 
       $kelas = Kelas::whereId($id)->first();
-      $pdf = PDF::loadview('pages.rekapabsensi.pertahun.print',[
+      $pdf = PDF::loadview('pages.rekapabsensi.pertahun
+      .print',[
         'kelas' => $kelas,
         'siswa' => Siswa::where('kelas_id', $kelas->id)->get(),
         'periode' => 'Satu Tahun Pelajaran',

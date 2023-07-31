@@ -42,11 +42,6 @@
             <div class="">
               <table border="0" cellspacing="1">
                 <tr>
-                  <td style="font-weight: bold">Program Keahlian</td>
-                  <td>:</td>
-                  <td>{{ $kelas->jurusan->name }}</td>
-                </tr>
-                <tr>
                   <td style="font-weight: bold">Kelas</td>
                   <td>:</td>
                   <td>{{ $kelas->name }} </td>

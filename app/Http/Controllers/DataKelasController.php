@@ -48,7 +48,6 @@ class DataKelasController extends Controller
       return view('pages.datakelas.create', [
         'guru' => Guru::doesntHave('kelas')->get(),
         'tapel' => Tapel::get(),
-        'jurusan' => Jurusan::get(),
         'role' => auth()->user()->role,
       ]);
   }
@@ -100,7 +99,6 @@ class DataKelasController extends Controller
       // 'walikelas' => $waliKelas,
       'guru' => Guru::doesntHave('kelas')->get(),
       'tapel' => Tapel::get(),
-      'jurusan' => Jurusan::get(),
       'role' => auth()->user()->role,
     ]);
   }

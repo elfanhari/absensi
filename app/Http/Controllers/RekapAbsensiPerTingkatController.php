@@ -26,16 +26,16 @@ class RekapAbsensiPerTingkatController extends Controller
 
       $tingkat = [
         [
-          'int' => 10,
-          'str' => 'Sepuluh'
+          'int' => 7,
+          'str' => 'Tujuh'
         ],
         [
-          'int' => 11,
-          'str' => 'Sebelas'
+          'int' => 8,
+          'str' => 'Delapan'
         ],
         [
-          'int' => 12,
-          'str' => 'Dua Belas'
+          'int' => 9,
+          'str' => 'Sembilan'
         ],
       ];
 

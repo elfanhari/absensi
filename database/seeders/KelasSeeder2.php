@@ -17,10 +17,9 @@ class KelasSeeder2 extends Seeder
       collect([
         [
           'tapel_id' => 1,
-          'jurusan_id' => 3,
           'guru_id' => 1,
           'tingkat' => 10,
-          'name' =>'X TKJ 1'
+          'name' =>'VII A'
         ],
       ])->each(function($kelas){
         Kelas::create($kelas);

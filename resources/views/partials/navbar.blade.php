@@ -6,7 +6,7 @@
         </li>
 
         <li class="nav-item">
-            <p class="mb-0 mt-2 fw-bold d-xs-none">Absensi SMKN 54 JAKARTA</p>
+            <p class="mb-0 mt-2 fw-bold d-xs-none">Absensi MTsN 27 JAKARTA</p>
         </li>
 
 

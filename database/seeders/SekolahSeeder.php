@@ -16,16 +16,16 @@ class SekolahSeeder extends Seeder
     {
       collect([
         [
-          'name' => 'SMK NEGERI 54 JAKARTA',
-          'npsn' => '20100156',
-          // 'nss' => '12345678',
-          'telepon' => '(021) 4248741',
-          'email' => 'info@smkn54jkt.sch.id',
-          'alamat' => 'Jl.Bend. Jago No.53, RT.14/RW.1, Serdang, Kec. Kemayoran, Kota Jakarta Pusat, DKI Jakarta',
-          'kodepos' => '10650',
-          'website' => 'smkn54jkt.sch.id',
-          'kepsek' => 'Hamidah Nasir, S.Pd',
-          'nipkepsek' => '197607092004015009',
+          'name' => 'MTsN 27 Jakarta',
+          'npsn' => '10900867',
+          // 'nss' => '',
+          'telepon' => '081234567890',
+          'email' => 'mtsn27jakarta@gmail.com',
+          'alamat' => 'Jl. Raya Jakarta',
+          'kodepos' => '46385',
+          'website' => 'mtsn27-jakbar.sch.id',
+          'kepsek' => 'Siti Awaliyah, S. Pd',
+          'nipkepsek' => '198002022006041008',
         ],
       ])->each(function($sekolah){
         Sekolah::create($sekolah);
