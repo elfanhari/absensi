@@ -198,6 +198,7 @@
     <script src="/adminlte/dist/js/pages/dashboard.js"></script>
     <script src="/extensions/simple-datatables/umd/simple-datatables.js"></script>
     <script src="/extensions/simple-datatables.js"></script>
+
     @yield('js')
 
 </body>

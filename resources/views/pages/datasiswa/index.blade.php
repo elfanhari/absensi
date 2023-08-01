@@ -73,7 +73,7 @@
                         <div class="card-body">
                             @if ($siswa->count() > 0)
                                 <div class="table-responsive">
-                                    <table id="table1" class="table table-sm table-hover ">
+                                    <table id="table1" class="table table-sm table-hover">
                                         <thead>
                                             <tr class="bg-dark text-white">
                                                 <th scope="col">#</th>

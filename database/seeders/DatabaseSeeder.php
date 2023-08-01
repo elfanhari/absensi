@@ -31,9 +31,9 @@ class DatabaseSeeder extends Seeder
           // PiketSeeder::class,
           // HariLiburSeeder::class,
 
-          UserSeeder2::class,
+          UserSeeder::class,
           AdminSeeder2::class,
-          GuruSeeder2::class,
+          GuruSeeder::class,
           PiketSeeder2::class,
           TapelSeeder2::class,
           JurusanSeeder2::class,

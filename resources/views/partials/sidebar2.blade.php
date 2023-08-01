@@ -12,8 +12,8 @@
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
-  <a class="brand-link">
-      <img src="/adminlte/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
+  <a class="brand-link" href="{{ route('home') }}">
+      <img src="/img/logo.png" alt="SMKN 54 JAKARTA"
           class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light d-xs-none text-uppercase">{{ auth()->user()->role }}
       </span>
