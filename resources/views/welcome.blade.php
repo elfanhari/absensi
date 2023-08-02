@@ -41,8 +41,12 @@
             }
         }
     </style>
-
-
+    <style>
+      .fs-13{
+        font-size: 13px;
+      }
+    </style>
+    <link rel="stylesheet" href="my-css/style.css">
     <!-- Custom styles for this template -->
     <link href="carousel.css" rel="stylesheet">
 </head>
@@ -100,6 +104,9 @@
                   </div>
 
                   <div class="container">
+
+                    {{-- TABEL DEKSTOP --}}
+                    <div class="d-xs-none">
                       <div class="table-responsive">
                           <table class="table table-sm table-bordered table-hover">
                               <thead>
@@ -180,7 +187,79 @@
                               </tbody>
                           </table>
                       </div>
-                  </div>
+                    </div>
+
+                    {{-- TABEL MOBILE --}}
+                    <div class="d-sm-none">
+                      <div class="table-responsive">
+                        <table class="table table-sm table-bordered table-hover fs-13">
+                            <thead>
+                                <tr class="bg-dark text-white">
+                                    <th class="text-center align-middle" style="min-width: 100px">Kelas</th>
+                                    <th class="text-center align-middle">Jumlah Siswa</th>
+                                    <th class="text-center align-middle">Nama Siswa</th>
+                                    <th class="text-center align-middle">Absensi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($kelas as $kelasItem)
+                                    @php
+                                        $siswaAbsen = App\Models\Absen::getSiswaByKelasAndTanggalAndKeterangan($kelasItem->id, $tanggal, 'H');
+                                        $jumlahSiswaAbsen = $siswaAbsen->count();
+                                        $siswaAbsen = $siswaAbsen->sortBy(function ($siswa) {
+                                            return $siswa->siswa->name;
+                                        });
+
+                                    @endphp
+
+                                    @if ($jumlahSiswaAbsen < 1)
+                                      <tr>
+                                        <td rowspan="2" class="text-center">{{ $kelasItem->name }}</td>
+                                        <td rowspan="2" class="text-center">{{ App\Models\Siswa::getSiswaAktifKelas($kelasItem->id)->count() }}</td>
+                                      </tr>
+                                    @else
+                                      <tr>
+                                        <td rowspan="{{ $jumlahSiswaAbsen + 1 }}" class="text-center"> {{ $kelasItem->name }}</td>
+                                        <td rowspan="{{ $jumlahSiswaAbsen + 1 }}" class="text-center">{{ App\Models\Siswa::getSiswaAktifKelas($kelasItem->id)->count() }}</td>
+                                      </tr>
+                                    @endif
+
+                                    @if ($jumlahSiswaAbsen < 1)
+
+                                    <td colspan="2" class="text-center">
+                                        -
+                                    </td>
+
+                                    @else
+
+                                      @foreach ($siswaAbsen as $absen)
+                                              <tr>
+                                                <td>{{ $absen->siswa->name }}</td>
+                                                <td class="text-center">
+                                                  @if ($absen->keterangan == 'S')
+                                                    <span class="badge bg-primary">
+                                                      SAKIT
+                                                    </span>
+                                                  @elseif ($absen->keterangan == 'I')
+                                                    <span class="badge bg-warning text-dark">
+                                                      IZIN
+                                                    </span>
+                                                  @elseif ($absen->keterangan == 'A')
+                                                    <span class="badge bg-danger">
+                                                      ALFA
+                                                    </span>
+                                                  @endif
+                                                </td>
+                                              </tr>
+                                        @endforeach
+
+                                    @endif
+
+                                @endforeach
+                            </tbody>
+                        </table>
+                      </div>
+                    </div>
 
               </div>
 

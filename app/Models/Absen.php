@@ -44,6 +44,16 @@ class Absen extends Model
                 ->count();
     }
 
+    public static function getSiswaByKelasAndTanggalAndKeterangan($kelasId, $tanggal, $keterangan)
+    {
+        return self::whereHas('siswa', function ($query) use ($kelasId) {
+            $query->where('kelas_id', $kelasId);
+        })->where('keterangan', '!=', $keterangan)
+          ->whereDate('tanggal', $tanggal)
+          ->orderBy('siswa_id', 'ASC')
+          ->get();
+    }
+
     public function pertemuan()
     {
       return $this->belongsTo(Pertemuan::class);
