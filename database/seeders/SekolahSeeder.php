@@ -16,15 +16,15 @@ class SekolahSeeder extends Seeder
     {
       collect([
         [
-          'name' => 'MTsN 27 Jakarta',
+          'name' => 'MTs Rekayasa',
           'npsn' => '10900867',
           // 'nss' => '',
           'telepon' => '081234567890',
-          'email' => 'mtsn27jakarta@gmail.com',
-          'alamat' => 'Jl. Raya Jakarta',
+          'email' => 'mtsrekayasa@gmail.com',
+          'alamat' => 'Jl. Raya Indonesia',
           'kodepos' => '46385',
-          'website' => 'mtsn27-jakbar.sch.id',
-          'kepsek' => 'Siti Awaliyah, S. Pd',
+          'website' => 'mtsrekayasa.sch.id',
+          'kepsek' => 'Maman Sudirman, S. Pd',
           'nipkepsek' => '19800202 200604 1 008',
         ],
       ])->each(function($sekolah){
