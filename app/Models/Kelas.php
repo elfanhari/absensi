@@ -36,4 +36,8 @@ class Kelas extends Model
       return $this->hasMany(Pembelajaran::class);
     }
 
+    public static function siswaDiKelas($id)
+    {
+      return Siswa::where('kelas_id', $id)->count();
+    }
 }

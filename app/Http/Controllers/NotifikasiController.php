@@ -20,9 +20,9 @@ class NotifikasiController extends Controller
     {
         return view('pages.notifikasi.index', [
           'role' => Auth::user()->role,
-          'siswa' => Siswa::whereHas('user', fn($q) => $q->where('is_aktif', true))->orderBy('name', 'ASC')->get(),
-          'guru' => Guru::where('user_id', '!=', Auth::user()->id)->whereHas('user', fn($q) => $q->where('is_aktif', true))->orderBy('name', 'ASC')->get(),
-          'admin' => Admin::where('user_id', '!=', Auth::user()->id)->whereHas('user', fn($q) => $q->where('is_aktif', true))->orderBy('name', 'ASC')->get(),
+          'siswa' => Siswa::whereHas('user', fn($q) => $q->where('is_aktif', true))->with('user', 'kelas')->orderBy('name', 'ASC')->get(),
+          'guru' => Guru::where('user_id', '!=', Auth::user()->id)->whereHas('user', fn($q) => $q->where('is_aktif', true))->with('user')->orderBy('name', 'ASC')->get(),
+          'admin' => Admin::where('user_id', '!=', Auth::user()->id)->whereHas('user', fn($q) => $q->where('is_aktif', true))->with('user')->orderBy('name', 'ASC')->get(),
           'allMyNotif' => Notifikasi::semuaNotifSaya(Auth::user()->id),
           'notifBelumDibaca' => Notifikasi::belumDibaca(Auth::user()->id),
           'notifTelahDibaca' => Notifikasi::telahDibaca(Auth::user()->id),

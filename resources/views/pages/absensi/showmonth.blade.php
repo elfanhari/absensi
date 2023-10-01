@@ -167,7 +167,8 @@
                                       <td class="border-dark">{{ $item->name }}</td>
                                       <td class="border-dark">{{ $item->nis }}</td>
                                       <td class="border-dark">{{ $item->jk }}</td>
-                                      @foreach ($months as $date)
+
+                                      {{-- @foreach ($months as $date)
                                           @if (Carbon::parse($date)->isoFormat('dddd') == 'Sabtu' || Carbon::parse($date)->isoFormat('dddd') == 'Minggu')
                                               <td class="border-dark bg-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Libur Hari {{ Carbon::parse($date)->isoFormat('dddd') == 'Sabtu' ? 'Sabtu' : 'Minggu' }}">
 
@@ -179,6 +180,34 @@
                                           @elseif ($absen->where('siswa_id', $item->id)->where('tanggal', $date)->count() < 1)
                                               <td class="border-dark text-center align-middle">
                                                   ?
+                                              </td>
+                                          @else
+                                              <td class="border-dark text-center align-middle">
+                                                  <span class="badge bg-{{ $absen->where('siswa_id', $item->id)->where('tanggal', $date)->first()->keterangan }}">
+                                                    {{ $absen->where('siswa_id', $item->id)->where('tanggal', $date)->first()->keterangan }}
+                                                  </span>
+                                              </td>
+                                          @endif
+                                      @endforeach --}}
+
+                                      @foreach ($months as $date)
+                                          @if (Carbon::parse($date)->isoFormat('dddd') == 'Sabtu' || Carbon::parse($date)->isoFormat('dddd') == 'Minggu')
+                                              <td class="border-dark bg-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Libur Hari {{ Carbon::parse($date)->isoFormat('dddd') == 'Sabtu' ? 'Sabtu' : 'Minggu' }}">
+
+                                              </td>
+                                          @elseif ($libur->pluck('tgl')->contains($date))
+                                              <td class="border-dark bg-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $libur->where('tgl', $date)->first()->ket }}">
+
+                                              </td>
+                                          @elseif (!in_array($date, $absenDiTglIni->toArray()))
+                                            <td class="border-dark text-center align-middle">
+                                                ?
+                                            </td>
+                                          @elseif ($absen->where('siswa_id', $item->id)->where('tanggal', $date)->count() < 1)
+                                              <td class="border-dark text-center align-middle">
+                                                  <span class="badge bg-success">
+                                                   H
+                                                  </span>
                                               </td>
                                           @else
                                               <td class="border-dark text-center align-middle">
@@ -218,12 +247,15 @@
                                                       ->where('tanggal', '<=', end($months))
                                                       ->whereNotIn('tanggal', $libur->pluck('tgl'))
                                                       ->count();
+
+                                          $jmlTidakHadir = $S + $I + $A;
                                       @endphp
 
-                                      <td class="border-dark text-center">{{ $H > 0 ? $H : '' }}</td>
+                                      <td class="border-dark text-center">{{ $absenDiTglIni->count() - $jmlTidakHadir == '0' ? '' : $absenDiTglIni->count() - $jmlTidakHadir}}</td>
                                       <td class="border-dark text-center">{{ $S > 0 ? $S : '' }}</td>
                                       <td class="border-dark text-center">{{ $I > 0 ? $I : '' }}</td>
                                       <td class="border-dark text-center">{{ $A > 0 ? $A : '' }}</td>
+
                                     </tr>
                                 @endforeach
                               </tbody>

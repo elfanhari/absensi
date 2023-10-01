@@ -78,10 +78,10 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $item->tahun_pelajaran }}</td>
                                                     <td>{{ $item->semester == 1 ? 'Ganjil' : 'Genap' }}</td>
-                                                    <td>{{ $item->kelas->count() }}</td>
+                                                    <td>{{ $item->kelas_count }}</td>
                                                     <td>
 
-                                                        @if ($item->kelas->count() < 1)
+                                                        @if ($item->kelas_count < 1)
                                                             <button type="button"
                                                                 class=" btn btn-danger pb-1 pt-0 px-2 d-inline"
                                                                 data-bs-toggle="modal"

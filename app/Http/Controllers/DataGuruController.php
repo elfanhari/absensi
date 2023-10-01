@@ -25,8 +25,8 @@ class DataGuruController extends Controller
         abort('403');
       }
       return view('pages.dataguru.index', [
-        'guru' => Guru::orderBy('name', 'ASC')->get(),
-        'kelas' => Kelas::get(),
+        'guru' => Guru::with('user:id,is_aktif')->orderBy('name', 'ASC')->get(),
+        'kelas' => Kelas::select('id', 'guru_id')->get(),
         'role' => Auth::user()->role,
       ]);
   }

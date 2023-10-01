@@ -54,6 +54,12 @@ class Absen extends Model
           ->get();
     }
 
+    public static function getAbsenHariIni($kelas_id, $tanggal)
+    {
+      $siswa_id = Siswa::where('kelas_id', $kelas_id)->get()->pluck('id');
+      return self::whereIn('siswa_id', $siswa_id)->where('tanggal', $tanggal)->distinct('tanggal')->pluck('tanggal');
+    }
+
     public function pertemuan()
     {
       return $this->belongsTo(Pertemuan::class);
@@ -64,4 +70,20 @@ class Absen extends Model
       return $this->belongsTo(Siswa::class);
     }
 
+    public static function absenDiTglTsb($siswa_id, $tanggal)
+    {
+      return self::where('siswa_id', $siswa_id)->where('tanggal', $tanggal)->first();
+    }
+
+    public static function countAbsenPerSiswa($keterangan, $siswa_id, $months, $libur)
+    {
+      $absen = self::where('siswa_id', $siswa_id)
+                  ->whereIn('keterangan', [$keterangan])
+                  ->where('tanggal', '>=', $months[0])
+                  ->where('tanggal', '<=', end($months))
+                  ->whereNotIn('tanggal', $libur->pluck('tgl'))
+                  ->count();
+      return ($absen > 0) ? $absen : '';
+
+    }
 }

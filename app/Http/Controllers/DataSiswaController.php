@@ -26,7 +26,7 @@ class DataSiswaController extends Controller
         abort('403');
       } else{
         return view('pages.datasiswa.index', [
-          'siswa' => Siswa::orderBy('name', 'ASC')->get(),
+          'siswa' => Siswa::with('kelas:id,name', 'user:id,is_aktif')->orderBy('name', 'ASC')->get(),
           'role' => Auth::user()->role,
         ]);
       }

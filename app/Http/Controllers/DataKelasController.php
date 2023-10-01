@@ -24,15 +24,14 @@ class DataKelasController extends Controller
       abort('403');
     } else{
       if(auth()->user()->role === 'admin'){
-        $kelas = Kelas::get();
+        $kelas = Kelas::with(['jurusan:id,singkatan', 'tapel', 'guru'])->withCount('siswa')->get();
       } else{
-        $kelas = Kelas::where('guru_id', auth()->user()->guru->id)->get();
+        $kelas = Kelas::where('guru_id', auth()->user()->guru->id)->with(['jurusan:id,singkatan', 'tapel', 'guru'])->withCount('siswa')->get();
       }
-      $siswa = Siswa::get();
+      // $siswa = Siswa::get();
       $role = auth()->user()->role;
-      return view('pages.datakelas.index', compact('kelas', 'siswa', 'role'));
+      return view('pages.datakelas.index', compact('kelas', 'role'));
     }
-
   }
 
   /**

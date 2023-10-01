@@ -145,7 +145,8 @@
                 @php
 
                   $role = Auth::user()->role;
-                  $date = date('Y-m-d');
+                  // $date = date('Y-m-d');
+                  $date = date('2023-10-02');
                   $month = Carbon::now()->format('m');
 
                   $dateString = $date;

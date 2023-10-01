@@ -23,11 +23,11 @@ class DashboardController extends Controller
     public function __invoke(Request $request)
     {
         return view('pages.dashboard.index',[
-          'siswa' => Siswa::get()->count(),
-          'guru' => Guru::get()->count(),
-          'admin' => Admin::get()->count(),
-          'kelas' => Kelas::get()->count(),
-          'tapel' => Tapel::get()->count(),
+          'siswa' => Siswa::count(),
+          'guru' => Guru::count(),
+          'admin' => Admin::count(),
+          'kelas' => Kelas::count(),
+          'tapel' => Tapel::count(),
           'role' => Auth::user()->role,
         ]);
     }

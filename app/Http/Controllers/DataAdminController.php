@@ -20,7 +20,7 @@ class DataAdminController extends Controller
         abort('403');
       } else{
         return view('pages.dataadmin.index', [
-          'admin' => Admin::orderBy('name', 'ASC')->get(),
+          'admin' => Admin::with('user:id,is_aktif')->orderBy('name', 'ASC')->get(),
           'role' => Auth::user()->role,
         ]);
       }

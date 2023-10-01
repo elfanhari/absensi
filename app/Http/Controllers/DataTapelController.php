@@ -19,9 +19,8 @@ class DataTapelController extends Controller
     if(auth()->user()->role !== 'admin'){
       abort('403');
     } else{
-        $tapel = Tapel::orderBy('tahun_pelajaran', 'ASC')->get();
-        $kelas = Kelas::get();
-        return view('pages.datatapel.index', compact('tapel', 'kelas'));
+        $tapel = Tapel::withCount('kelas')->orderBy('tahun_pelajaran', 'ASC')->get();
+        return view('pages.datatapel.index', compact('tapel'));
     }
   }
 

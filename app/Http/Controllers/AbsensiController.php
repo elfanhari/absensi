@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 class AbsensiController extends Controller
 {
@@ -21,11 +22,11 @@ class AbsensiController extends Controller
     public function index()
     {
         if(auth()->user()->role === 'admin' || auth()->user()->role === 'piket'){
-          $kelas = Kelas::get();
+          $kelas = Kelas::with(['tapel', 'guru:id,name'])->get();
         } elseif(auth()->user()->role === 'guru'){
-          $kelas = Kelas::where('guru_id', Auth::user()->guru->id)->get();
+          $kelas = Kelas::where('guru_id', Auth::user()->guru->id)->with(['tapel', 'guru:id,name'])->get();
         } elseif(auth()->user()->role === 'siswa'){
-          $kelas = Kelas::where('id', Auth::user()->siswa->kelas_id)->get();
+          $kelas = Kelas::where('id', Auth::user()->siswa->kelas_id)->with(['tapel', 'guru:id,name'])->get();
         }
 
         return view('pages.absensi.index', [
@@ -145,6 +146,8 @@ class AbsensiController extends Controller
         $siswa = Siswa::getSiswaAktifKelas($kelas->id);
       }
 
+      $siswa_id = $siswa->pluck('id');
+
       return view('pages.absensi.showmonth', [
         'kelas' => $kelas,
         'monthIndo' => Carbon::create()->month($month)->locale('id')->isoFormat('MMMM') . ' ' . $year,
@@ -152,13 +155,14 @@ class AbsensiController extends Controller
         'months' => $datesInMonth,
         'siswa' => $siswa,
         'role' => Auth::user()->role,
-        'libur' => HariLibur::get(),
-        'absen' => Absen::get(),
+        'libur' => HariLibur::whereMonth('tgl', $month)->get(),
+        'absen' => Absen::whereIn('siswa_id', $siswa_id)->where('keterangan', '!=', 'H')->whereMonth('tanggal', $month)->get(),
+        'absenDiTglIni' => Absen::whereNotIn('tanggal', HariLibur::get()->pluck('tgl'))->whereIn('siswa_id', $siswa_id)->whereMonth('tanggal', $month)->distinct('tanggal')->pluck('tanggal'),
       ]);
     }
 
-    public function getAbsensi($role, $kelas, $month, $date, $key){
-
+    public function getAbsensi($role, $kelas, $month, $date, $key)
+    {
       if (Auth::user()->role == 'guru') {
         if ($kelas != Auth::user()->guru->kelas->id) {
           abort('403');
@@ -183,41 +187,49 @@ class AbsensiController extends Controller
         abort('404');
       } else {
         $siswa = Siswa::getSiswaAktifKelas($kelas->id);
+        $siswa_id = $siswa->pluck('id');
         return view('pages.absensi.kelolaabsen', [
           'siswa' => $siswa,
           'kelas' => $kelas,
           'month' => $month,
           'date'  => $date,
           'role' => Auth::user()->role,
-          'absen' => Absen::get(),
+          'absen' => Absen::whereIn('siswa_id', $siswa_id)->where('tanggal', $date)->get(),
+          // 'absen' => Absen::get(),
         ]);
       }
     }
 
+    public function putAbsensi(Request $request, $role, $kelas, $month, $date)
+    {
+        $siswas = $request->siswa_id;
+        $siswas = Siswa::whereIn('id', $siswas)->pluck('id');
 
-    public function putAbsensi(Request $request, $role, $kelas, $month, $date){
-      $siswas = $request->siswa_id;
-      $siswas = Siswa::whereIn('id', $siswas)->get()->pluck('id');
+        foreach ($siswas as $i => $siswaId) {
+            $absen = Absen::where('siswa_id', $siswaId)
+                ->where('tanggal', $date)
+                ->first();
 
-      foreach ($siswas as $i => $siswa) {
-        $absen = Absen::where('siswa_id', $siswa)->where('tanggal', $date)->first();
-        // $absen = $absen->where('siswa_id', $siswa)->first();
-
-        if($absen) {
-          $absen->update([
-            'keterangan' => $request->keterangan[$i]
-          ]);
-        } else {
             if ($request->keterangan[$i]) {
-              Absen::create([
-                'siswa_id' => $siswa,
-                'tanggal' => $date,
-                'keterangan' => $request->keterangan[$i]
-              ]);
+                if ($absen) {
+                    $absen->update([
+                        'keterangan' => $request->keterangan[$i]
+                    ]);
+                } else {
+                    Absen::create([
+                        'siswa_id' => $siswaId,
+                        'tanggal' => $date,
+                        'keterangan' => $request->keterangan[$i]
+                    ]);
+                }
+            } elseif ($absen) {
+                $absen->delete();
             }
         }
-      }
-      return redirect(route('absensi.kelas.month', [$role, $kelas, $month]))
-      ->withSuccess('Data berhasil diperbarui!');
+
+        return redirect(route('absensi.kelas.month', [$role, $kelas, $month]))
+            ->withSuccess('Data berhasil diperbarui!');
+
     }
+
 }
